@@ -1,0 +1,34 @@
+## Client
+# Logs
+client/logs
+client/*.log
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/pnpm-debug.log*
+client/lerna-debug.log*
+
+# React
+client/node_modules
+client/dist
+client/dist-ssr
+client/*.local
+
+## Server
+*__pycache__
+server/credentials.py
+server/venv
+
+## Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+.github

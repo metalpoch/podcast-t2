@@ -25,14 +25,20 @@ cd client
 npm install
 ```
 
-### Regrese al directorio principal
+### Instale las dependencias del backend usando [pip]
+#### Cree y habilite el entorno virtual para instalar las dependencias
+Usando virtualenv, se instala mediante pip
 ```bash
-cd ..
+cd ../server
+virtualenv venv
+source venv/bin/activate # activar desde linux
+pip install -r requeriments.txt
 ```
-
-#### Instale las dependencias del backend usando [pip]
+o en su defecto con venv, viene por defecto en las librerias de Python
 ```bash
-cd server
+cd ../server
+python -m venv venv
+source venv/bin/activate # activar desde linux
 pip install -r requeriments.txt
 ```
 
@@ -44,8 +50,8 @@ SPOTIFY_CLIENT_ID = "" # id de la cuenta de desarrollo de Spotify
 SPOTIFY_CLIENT_SECRET = "" # secret de la cuenta de desarrollo de Spotify
 ```
 
-# Ejecucion del servidor
-##### Usando flask run (Linux)
+# Ejecucion local del servidor (backend)
+##### Usando flask run
 ```bash
 cd server
 export FLASK_APP=main.py
@@ -53,7 +59,7 @@ export FLASK_ENV=development
 flask run
 ```
 
-##### Usando app.run() (multi plataforma)
+##### Usando app.run()
 ```bash
 cd server
 python main.py

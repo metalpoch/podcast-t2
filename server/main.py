@@ -2,11 +2,12 @@ import secrets
 
 from flask import Flask, jsonify, redirect, request
 
-from credentials import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT
 from utils.spotify import Spotify
 from utils.validations import validate_spotify_state
 
 app = Flask(__name__)
+spotify = Spotify()
+
 
 @app.route("/api")
 def index():
@@ -32,10 +33,6 @@ def auth():
         A redirect response to the authorization URL or a JSON response with an error message.
     """
     state = secrets.token_hex(120)
-    spotify = Spotify(
-        client_id=SPOTIFY_CLIENT_ID,
-        redirect_uri=SPOTIFY_REDIRECT
-    )
     url = spotify.url_auth_code_flow(state)
     if validate_spotify_state(state, url):
         return redirect(url)
@@ -43,7 +40,7 @@ def auth():
         return jsonify({"error": "state_mismatch"})
 
 
-@app.route("/api/spotify/callback")
+@app.route("/api/spotify/auth/callback")
 def spotify_callback():
     """
     Handles the Spotify callback URL and returns a JSON response with the access token.
@@ -59,19 +56,12 @@ def spotify_callback():
     if error:
         return jsonify({"error": error})
 
-    spotify = Spotify(
-        client_id=SPOTIFY_CLIENT_ID,
-        redirect_uri=SPOTIFY_REDIRECT
-    )
-
-    response = spotify.get_token(
-        code=code, client_secret=SPOTIFY_CLIENT_SECRET
-    )
+    response = spotify.get_token(code)
 
     return jsonify(response)
 
 
-@app.route("/api/spotify/refresh")
+@app.route("/api/spotify/auth/refresh")
 def refresh_auth():
     """
     Handles the refresh token request and returns a JSON response with the new access token.
@@ -85,14 +75,7 @@ def refresh_auth():
     if not refresh_token:
         return jsonify({"error": "refresh_token empty"})
 
-    spotify = Spotify(
-        client_id=SPOTIFY_CLIENT_ID,
-        redirect_uri=SPOTIFY_REDIRECT
-    )
-
-    response = spotify.refresh_auth(
-        refresh_token=refresh_token, client_secret=SPOTIFY_CLIENT_SECRET
-    )
+    response = spotify.refresh_auth(refresh_token=refresh_token)
 
     return jsonify(response)
 

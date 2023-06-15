@@ -3,6 +3,8 @@ from urllib.parse import urlencode
 
 import requests
 
+from credentials import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT
+
 
 class Spotify:
     """
@@ -14,12 +16,14 @@ class Spotify:
         The URL for the Spotify authorization endpoint.
     url_token : str
         The URL for the Spotify token endpoint.
-    scope : str
-        The scope of the authorization request.
-    redirect_uri : str
-        The redirect URI for the authorization request.
     __client_id : str
         The client ID for the Spotify API.
+    __client_secret : str
+        The client secret for the Spotify API.
+    __redirect_url : str
+        The redirect URI for the Spotify API.
+    scope : str
+        The scope of the authorization request.
 
     Methods
     -------
@@ -29,32 +33,26 @@ class Spotify:
     __handlerToken(headers: dict, body: dict) -> dict:
         Handles the token request and returns the response.
 
-    __authorization(client_secret: str) -> str:
-        Returns the authorization header for the token request.
+    __headers_request_() -> dict:
+        Returns the headers for the token request.
 
-    get_token(code: str, client_secret: str) -> dict:
+    get_token(code: str) -> dict:
         Requests a token using the authorization code.
 
-    refresh_auth(refresh_token: str, client_secret: str):
+    refresh_auth(refresh_token: str):
         Requests a new access token using the refresh token.
     """
 
-    def __init__(self, client_id: str, redirect_uri: str = "") -> None:
+    def __init__(self) -> None:
         """
         Constructs all the necessary attributes for the Spotify object.
-
-        Parameters
-        ----------
-        client_id : str
-            The client ID for the Spotify API.
-        redirect_uri : str, optional
-            The redirect URI for the authorization request, by default "".
         """
         self.url_auth = "https://accounts.spotify.com/authorize/"
         self.url_token = "https://accounts.spotify.com/api/token/"
+        self.__client_id = SPOTIFY_CLIENT_ID
+        self.__client_secret = SPOTIFY_CLIENT_SECRET
+        self.__redirect_url = SPOTIFY_REDIRECT
         self.scope = "user-read-private user-read-email"
-        self.redirect_uri = redirect_uri
-        self.__client_id = client_id
 
     def url_auth_code_flow(self, state: str):
         """
@@ -70,13 +68,15 @@ class Spotify:
         str
             The URL for the authorization code flow.
         """
-        query_params = urlencode({
-            "response_type": "code",
-            "client_id": self.__client_id,
-            "redirect_uri": self.redirect_uri,
-            "scope": self.scope,
-            "state": state,
-        })
+        query_params = urlencode(
+            {
+                "response_type": "code",
+                "client_id": self.__client_id,
+                "redirect_uri": self.__redirect_url,
+                "scope": self.scope,
+                "state": state,
+            }
+        )
         return f"{self.url_auth}?{query_params}"
 
     def __handlerToken(self, headers: dict, body: dict) -> dict:
@@ -99,24 +99,23 @@ class Spotify:
         status_code = response.status_code
         return response.json() if status_code == 200 else {"status_code": status_code}
 
-    def __authorization(self, client_secret: str) -> str:
+    def __headers_request(self) -> dict:
         """
-        Returns the authorization header for the token request.
-
-        Parameters
-        ----------
-        client_secret : str
-            The client secret for the Spotify API.
+        Returns the headers for the token request.
 
         Returns
         -------
-        str
-            The authorization header for the token request.
+        dict
+            The headers for the token request.
         """
-        string_bytes = f"{self.__client_id}:{client_secret}".encode("utf-8")
-        return f"Basic {b64encode(string_bytes).decode()}"
+        string_bytes = f"{self.__client_id}:{self.__client_secret}".encode("utf-8")
+        encoded = b64encode(string_bytes).decode()
+        return {
+            "Authorization": f"Basic {encoded}",
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
 
-    def get_token(self, code: str, client_secret: str) -> dict:
+    def get_token(self, code: str) -> dict:
         """
         Requests a token using the authorization code.
 
@@ -124,27 +123,23 @@ class Spotify:
         ----------
         code : str
             The authorization code returned by the authorization server.
-        client_secret : str
-            The client secret for the Spotify API.
 
         Returns
         -------
         dict
             The response from the token request.
         """
-        headers = {
-            "Authorization" : self.__authorization(client_secret),
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
+
+        headers = self.__headers_request()
         body = {
             "code": code,
-            "redirect_uri": self.redirect_uri,
-            "grant_type": "authorization_code"
+            "redirect_uri": self.__redirect_url,
+            "grant_type": "authorization_code",
         }
 
         return self.__handlerToken(headers=headers, body=body)
 
-    def refresh_auth(self, refresh_token: str, client_secret: str):
+    def refresh_auth(self, refresh_token: str) -> dict:
         """
         Requests a new access token using the refresh token.
 
@@ -152,20 +147,12 @@ class Spotify:
         ----------
         refresh_token : str
             The refresh token returned by the token server.
-        client_secret : str
-            The client secret for the Spotify API.
 
         Returns
         -------
         dict
             The response from the token request.
         """
-        headers = {
-            "Authorization" : self.__authorization(client_secret),
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
-        body = {
-            "grant_type": "refresh_token",
-            "refresh_token": refresh_token
-        }
+        headers = self.__headers_request()
+        body = {"grant_type": "refresh_token", "refresh_token": refresh_token}
         return self.__handlerToken(headers=headers, body=body)

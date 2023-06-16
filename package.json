@@ -1,0 +1,14 @@
+{
+  "name": "podcast-t2",
+  "version": "1.0.0",
+  "description": "Servicio web líder en creación de podcast para Spotify",
+  "scripts": {
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && venv/bin/python main.py\""
+  },
+  "keywords": ["spotify", "podcast", "landing page", "react", "python", "flask"],
+  "authors": ["Team 2 Social Oplesk", "Keiber Urbila <keiberup.dev@gmail.com>"],
+  "dependencies": {
+    "concurrently": "8.2.0"
+  },
+  "license": "ISC"
+}

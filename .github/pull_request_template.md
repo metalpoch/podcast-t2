@@ -4,9 +4,8 @@ Please include a summary of the changes and the related issue. Please also inclu
 
 ## Type of change
 
-Please delete options that are not relevant.
-
 - [ ] Bug fix 🐛
+- [ ] Refactor 🔨
 - [ ] New feature ✨
 - [ ] Breaking change 💥
 - [ ] This change requires a documentation update 📝

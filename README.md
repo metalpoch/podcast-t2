@@ -15,11 +15,12 @@ Esta landing page actualmente trabaja con las siguientes tecnologías:
 
 ## Instalación y uso de manera local 💾
 
-#### Clona este repositorio [GitHub] y acceda al directorio
+#### Clona este repositorio [GitHub] y acceda al directorio e instale las dependencias globales
 
 ```bash
 git clone https://github.com/metalpoch/podcast-t2.git
 cd podcast-t2
+npm install
 ```
 
 #### Instale las dependencias del frontend usando [npm]
@@ -51,7 +52,7 @@ source venv/bin/activate # activar desde linux
 pip install -r requeriments.txt
 ```
 
-## Credenciales de la API Spotify 🗝️
+## Credenciales de [Spotify Api's] 🗝️
 
 Para consumir la api de desarrollo de spotify se debe crear un fichero credentials.py dentro del directorio server, a la mismo nivel de main.py con el siguiente contenido
 
@@ -88,7 +89,6 @@ npm run dev
     └── utils/            # directorio de modulos o librerias de utilidad
 ```
 
-[//]: #
 [python]: https://www.python.org/
 [node.js]: https://nodejs.org/en
 [flask]: https://flask.palletsprojects.com/en/2.3.x/
@@ -97,3 +97,5 @@ npm run dev
 [pip]: https://pip.pypa.io/en/stable/
 [npm]: https://www.npmjs.com/
 [vite]: https://vitejs.dev/
+[Spotify]: https://open.spotify.com/
+[Spotify Api's]: https://developer.spotify.com/

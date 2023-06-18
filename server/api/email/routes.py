@@ -1,4 +1,5 @@
 from datetime import datetime
+
 import api
 from flask import jsonify, request
 from flask_mail import Message
@@ -15,8 +16,9 @@ LANGS_MAP = {
     "fr": "%d/%m/%Y",
     "it": "%d/%m/%Y",
     "pt": "%d/%m/%Y",
-    "ja": "%Y/%m/%d"
+    "ja": "%Y/%m/%d",
 }
+
 
 @route.route("/", methods=["POST"])
 def index():
@@ -36,7 +38,7 @@ def index():
         response = jsonify(error)
         response.status_code = 422
         return response
-    
+
     dt_object = datetime.strptime(day, DATE_FORMAT)
     hour = dt_object.strftime("%H:%M")
     day = dt_object.strftime(LANGS_MAP[lang])

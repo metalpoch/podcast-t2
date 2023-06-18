@@ -55,7 +55,7 @@ def is_valid_date(date: str):
     bool
         True if the date string is valid, False otherwise.
     """
-    pattern = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z'
+    pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
     return re.fullmatch(pattern, date) is not None
 
 
@@ -79,15 +79,14 @@ def handler_email_error(field: str, data: str | None):
     langs = ("es", "en", "de", "fr", "it", "pt", "ja")
     if not data:
         return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field is required",
-            }
+            "error": "Unprocessable Entity",
+            "message": f"the {field} field is required",
+        }
     elif type(data) != str:
         return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field was expected to be a string",
-
-            }
+            "error": "Unprocessable Entity",
+            "message": f"the {field} field was expected to be a string",
+        }
 
     elif field == "recipient" and not is_valid_email(data):
         return {
@@ -108,7 +107,7 @@ def handler_email_error(field: str, data: str | None):
         }
 
 
-def validate_json_email(body: dict) -> tuple :
+def validate_json_email(body: dict) -> tuple:
     """
     Validates a JSON object containing email data.
 

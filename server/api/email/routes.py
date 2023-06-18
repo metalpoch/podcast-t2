@@ -28,12 +28,6 @@ def index():
     JSON response
         A JSON response indicating whether the email was sent successfully or an error occurred.
     """
-    # If the HTTP method is not POST, return an error response
-    if request.method != "POST":
-        response = jsonify({"error": "Method Not Allowed"})
-        response.status_code = 405
-        return response
-
     # Validate the JSON data in the request body
     error, client, lang, day, recipient = validate_json_email(request.get_json())
 

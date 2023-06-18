@@ -1,7 +1,6 @@
 import secrets
 
 from flask import jsonify, redirect, request
-
 from utils.spotify import Spotify
 from utils.validations import validate_spotify_state
 

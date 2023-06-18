@@ -1,7 +1,6 @@
+import api
 from flask import jsonify, request
 from flask_mail import Message
-
-import api
 from utils.email import message_template
 from utils.validations import validate_json_email
 
@@ -12,7 +11,7 @@ from . import route
 def index():
     """
     Handles requests to the root URL ("/").
-    
+
     Returns
     -------
     JSON response

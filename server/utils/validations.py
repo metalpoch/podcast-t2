@@ -1,7 +1,8 @@
 import re
 from urllib.parse import parse_qs, urlparse
 
-def validate_spotify_state(state:str, url: str):
+
+def validate_spotify_state(state: str, url: str):
     """
     Validates the state parameter in a Spotify authorization URL.
 
@@ -36,7 +37,7 @@ def is_valid_email(email: str) -> bool:
     bool
         True if the email address is valid, False otherwise.
     """
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     return re.match(pattern, email) is not None
 
 
@@ -54,7 +55,7 @@ def is_valid_time(time) -> bool:
     bool
         True if the time string is valid, False otherwise.
     """
-    pattern = r'^([01]\d|2[0-3]):([0-5]\d)$'
+    pattern = r"^([01]\d|2[0-3]):([0-5]\d)$"
     return re.match(pattern, time) is not None
 
 
@@ -83,26 +84,25 @@ def validate_json_email(body: dict) -> dict:
         if not data:
             return {
                 "error": "Unprocessable Entity",
-                "message": f"the {field} field is required"
+                "message": f"the {field} field is required",
             }
         elif type(data) != data_type:
             return {
                 "error": "Unprocessable Entity",
-                "message": f"the {field} field was expected to be a {data_type}"
+                "message": f"the {field} field was expected to be a {data_type}",
             }
 
         elif field == "recipient" and not is_valid_email(data):
             return {
                 "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid"
+                "message": f"The {field} field was expected to be valid",
             }
 
         elif field == "time" and not is_valid_time(data):
             return {
                 "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid"
+                "message": f"The {field} field was expected to be valid",
             }
-
 
         result[field] = data
 

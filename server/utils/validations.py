@@ -41,25 +41,74 @@ def is_valid_email(email: str) -> bool:
     return re.match(pattern, email) is not None
 
 
-def is_valid_time(time) -> bool:
+def is_valid_date(date: str):
     """
-    Validates if a time string is valid.
+    Validates if a date string is valid.
 
     Parameters
     ----------
-    time : str
-        The time string to validate.
+    date : str
+        The date string to validate.
 
     Returns
     -------
     bool
-        True if the time string is valid, False otherwise.
+        True if the date string is valid, False otherwise.
     """
-    pattern = r"^([01]\d|2[0-3]):([0-5]\d)$"
-    return re.match(pattern, time) is not None
+    pattern = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z'
+    return re.fullmatch(pattern, date) is not None
 
 
-def validate_json_email(body: dict) -> dict:
+def handler_email_error(field: str, data: str | None):
+    """
+    Handles errors related to email data.
+
+    Parameters
+    ----------
+    field : str
+        The name of the field being validated.
+    data : str or None
+        The value of the field being validated.
+
+    Returns
+    -------
+    dict
+        A dictionary containing an error message if the validation fails,
+        or None if the validation succeeds.
+    """
+    langs = ("es", "en", "de", "fr", "it", "pt", "ja")
+    if not data:
+        return {
+                "error": "Unprocessable Entity",
+                "message": f"the {field} field is required",
+            }
+    elif type(data) != str:
+        return {
+                "error": "Unprocessable Entity",
+                "message": f"the {field} field was expected to be a string",
+
+            }
+
+    elif field == "recipient" and not is_valid_email(data):
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field was expected to be valid",
+        }
+
+    elif field == "lang" and data not in langs:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field not is in {langs}",
+        }
+
+    elif field == "date" and not is_valid_date(data):
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field was expected to be valid",
+        }
+
+
+def validate_json_email(body: dict) -> tuple :
     """
     Validates a JSON object containing email data.
 
@@ -74,36 +123,11 @@ def validate_json_email(body: dict) -> dict:
         A dictionary containing an error message if the validation fails,
         or the validated data if the validation succeeds.
     """
-    # Define the fields to validate and their expected data types
-    fields = {"client": str, "day": str, "time": str, "recipient": str}
-    result = {}
-
     # Validate each field in the JSON object
-    for field, data_type in fields.items():
-        data = body.get(field, False)
-        if not data:
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field is required",
-            }
-        elif type(data) != data_type:
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field was expected to be a {data_type}",
-            }
+    for field in ("client", "lang", "date", "recipient"):
+        data = body.get(field)
+        error = handler_email_error(field, data)
+        if error:
+            return error, None, None, None, None
 
-        elif field == "recipient" and not is_valid_email(data):
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid",
-            }
-
-        elif field == "time" and not is_valid_time(data):
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid",
-            }
-
-        result[field] = data
-
-    return result
+    return None, body["client"], body["lang"], body["date"], body["recipient"]

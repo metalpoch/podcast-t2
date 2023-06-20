@@ -2,57 +2,60 @@
 
 En este archivo README.md se proporcionará una documentación en español para el código proporcionado. El código es un ejemplo de una aplicación Flask que utiliza la biblioteca Spotify para la autenticación y autorización de usuarios. A continuación, se explicará cada función y su funcionalidad.
 
-### Importaciones
-
-El código comienza con las siguientes importaciones:
-
 ```python
 import secrets
-from flask import jsonify, redirect, request
+from flask import jsonify, redirect, request, session
 from utils.spotify import Spotify
-from utils.validations import validate_spotify_state
+
+### Importaciones
+El código comienza con las siguientes importaciones:
+
 ```
 
-- `secrets` se utiliza para generar un token aleatorio que se utiliza en el proceso de autorización de Spotify.
-- `flask` es el módulo principal de Flask, utilizado para crear la aplicación web.
+- `secrets` se utiliza para generar un token aleatorio que se utilizará como estado en la autorización de Spotify.
+- `flask` es el módulo principal de Flask, utilizado para crear la aplicación web y manejar las solicitudes HTTP.
 - `jsonify` se utiliza para convertir los datos en formato JSON antes de enviarlos como respuesta.
 - `redirect` se utiliza para redirigir al usuario a una URL específica.
 - `request` se utiliza para acceder a los datos de la solicitud HTTP entrante.
-- `Spotify` es una clase personalizada que proporciona funcionalidad relacionada con Spotify, como la generación de URL de autorización y la obtención de tokens de acceso.
-- `validate_spotify_state` es una función personalizada que valida si el estado generado por `secrets` coincide con el estado recibido en la URL de autorización de Spotify.
+- `session` se utiliza para almacenar datos de sesión entre solicitudes.
+- `Spotify` es una clase personalizada que proporciona funcionalidad relacionada con la API de Spotify.
 
-### Ruta `"/auth"`
+### Ruta `"/auth/"`
 
 ```python
-@route.route("/auth")
+@route.route("/auth/")
 def auth():
-    state = secrets.token_hex(120)
+    session["state"] = state = secrets.token_hex(120)
     url = spotify.url_auth_code_flow(state)
-    if validate_spotify_state(state, url):
-        return redirect(url)
-    else:
-        return jsonify({"error": "state_mismatch"})
+    return redirect(url)
 ```
 
-Esta ruta maneja la URL de autorización de Spotify y redirige al usuario a la URL de autorización generada por Spotify. La función `secrets.token_hex(120)` genera un token aleatorio de 120 caracteres que se utiliza como estado en el proceso de autorización. Luego, se llama al método `url_auth_code_flow(state)` de la instancia de la clase `Spotify` para generar la URL de autorización de Spotify. Si el estado generado coincide con el estado recibido en la URL de autorización de Spotify, se redirige al usuario a la URL de autorización. De lo contrario, se devuelve un mensaje de error en formato JSON.
+Esta ruta maneja la URL de autorización de Spotify y redirige al usuario a la URL de autorización. Primero, se genera un token aleatorio de 120 caracteres utilizando `secrets.token_hex()` y se almacena en la sesión del usuario. Luego, se obtiene la URL de autorización de Spotify utilizando el método `url_auth_code_flow()` de la instancia de la clase `Spotify`. Finalmente, se redirige al usuario a la URL de autorización utilizando `redirect()`.
 
-### Ruta `"/auth/callback"`
+### Ruta `"/auth/callback/"`
 
 ```python
-@route.route("/auth/callback")
+@route.route("/auth/callback/")
 def spotify_callback():
     error = request.args.get("error")
+    state = str(request.args.get("state"))
     code = str(request.args.get("code"))
 
     if error:
-        return jsonify({"error": error})
+        response = jsonify({"error": error})
+        response.status_code = 400
+        return response
+    elif state != session["state"]:
+        response = jsonify({"error": "state_mismatch"})
+        response.status_code = 400
+        return response
 
     response = spotify.get_token(code)
 
     return jsonify(response)
 ```
 
-Esta ruta maneja la URL de devolución de llamada de Spotify y devuelve una respuesta JSON con el token de acceso. La función `request.args.get("error")` obtiene el valor del parámetro "error" de la URL de devolución de llamada. Si hay un error, se devuelve un mensaje de error en formato JSON. De lo contrario, se obtiene el valor del parámetro "code" de la URL de devolución de llamada y se llama al método `get_token(code)` de la instancia de la clase `Spotify` para obtener el token de acceso. Luego, se devuelve la respuesta en formato JSON.
+Esta ruta maneja la URL de devolución de llamada de Spotify y devuelve una respuesta en formato JSON con el token de acceso. Se obtienen los parámetros `error`, `state` y `code` de la URL de devolución de llamada utilizando `request.args.get()`. Si hay un error en la autorización, se devuelve una respuesta de error con el código de estado 400. Si el estado no coincide con el valor almacenado en la sesión, se devuelve una respuesta de error con el código de estado 400. De lo contrario, se obtiene el token de acceso utilizando el método `get_token()` de la instancia de la clase `Spotify`. Finalmente, se devuelve una respuesta en formato JSON con el token de acceso.
 
 ### Ruta `"/auth/refresh"`
 

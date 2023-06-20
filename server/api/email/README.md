@@ -52,14 +52,14 @@ def index():
         response.status_code = 405
         return response
 
-    error, client, lang, day, recipient = validate_json_email(request.get_json())
+    error, client, lang, date, recipient = validate_json_email(request.get_json())
 
     if error:
         response = jsonify(error)
         response.status_code = 422
         return response
 
-    dt_object = datetime.strptime(day, DATE_FORMAT)
+    dt_object = datetime.strptime(date, DATE_FORMAT)
     hour = dt_object.strftime("%H:%M")
     day = dt_object.strftime(LANGS_MAP[lang])
 

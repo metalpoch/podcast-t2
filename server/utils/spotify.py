@@ -2,8 +2,8 @@ from base64 import b64encode
 from urllib.parse import urlencode
 
 import requests
-
-from credentials import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT
+from credentials import (SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET,
+                         SPOTIFY_REDIRECT)
 
 
 class Spotify:

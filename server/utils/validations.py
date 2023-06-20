@@ -1,25 +1,4 @@
 import re
-from urllib.parse import parse_qs, urlparse
-
-def validate_spotify_state(state:str, url: str):
-    """
-    Validates the state parameter in a Spotify authorization URL.
-
-    Parameters
-    ----------
-    state : str
-        The state parameter to validate.
-    url : str
-        The Spotify authorization URL.
-
-    Returns
-    -------
-    bool
-        True if the state parameter is valid, False otherwise.
-    """
-    parsed_url = urlparse(url)
-    state_url = parse_qs(parsed_url.query)["state"][0]
-    return True if state == state_url else False
 
 
 def is_valid_email(email: str) -> bool:
@@ -36,31 +15,81 @@ def is_valid_email(email: str) -> bool:
     bool
         True if the email address is valid, False otherwise.
     """
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     return re.match(pattern, email) is not None
 
 
-def is_valid_time(time) -> bool:
+def is_valid_date(date: str):
     """
-    Validates if a time string is valid.
+    Validates if a date string is valid.
 
     Parameters
     ----------
-    time : str
-        The time string to validate.
+    date : str
+        The date string to validate.
 
     Returns
     -------
     bool
-        True if the time string is valid, False otherwise.
+        True if the date string is valid, False otherwise.
     """
-    pattern = r'^([01]\d|2[0-3]):([0-5]\d)$'
-    return re.match(pattern, time) is not None
+    pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
+    return re.fullmatch(pattern, date) is not None
 
 
-def validate_json_email(body: dict) -> dict:
+def handler_spreadsheets_error(field: str, data: str | None):
     """
-    Validates a JSON object containing email data.
+    Handles errors related to spreadsheets data.
+
+    Parameters
+    ----------
+    field : str
+        The name of the field being validated.
+    data : str or None
+        The value of the field being validated.
+
+    Returns
+    -------
+    dict
+        A dictionary containing an error message if the validation fails,
+        or None if the validation succeeds.
+    """
+    language = ("es", "en", "de", "fr", "it", "pt", "ja")
+
+    if not data:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field is required",
+        }
+
+    elif type(data) != str:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field was expected to be a string",
+        }
+
+    elif field == "language" and data not in language:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field not is in {language}",
+        }
+
+    elif field == "email" and not is_valid_email(data):
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field was expected to be valid",
+        }
+
+    elif field == "appointment" and not is_valid_date(data):
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field was expected to be valid",
+        }
+
+
+def validate_json_sheet(body: dict) -> dict | None:
+    """
+    Validates a JSON object containing spreadsheets data.
 
     Parameters
     ----------
@@ -73,37 +102,10 @@ def validate_json_email(body: dict) -> dict:
         A dictionary containing an error message if the validation fails,
         or the validated data if the validation succeeds.
     """
-    # Define the fields to validate and their expected data types
-    fields = {"client": str, "day": str, "time": str, "recipient": str}
-    result = {}
-
     # Validate each field in the JSON object
-    for field, data_type in fields.items():
-        data = body.get(field, False)
-        if not data:
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field is required"
-            }
-        elif type(data) != data_type:
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"the {field} field was expected to be a {data_type}"
-            }
-
-        elif field == "recipient" and not is_valid_email(data):
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid"
-            }
-
-        elif field == "time" and not is_valid_time(data):
-            return {
-                "error": "Unprocessable Entity",
-                "message": f"The {field} field was expected to be valid"
-            }
-
-
-        result[field] = data
-
-    return result
+    fields = ("client", "email", "language", "appointment")
+    for field in fields:
+        data = body.get(field)
+        error = handler_spreadsheets_error(field, data)
+        if error:
+            return error

@@ -72,7 +72,6 @@ npm run dev # ¡Listo!
 │   ├── src               # directorio principal de los componentes
 └── server              # backend contruido con Flask blueprints
     ├── api               # modulos por ruta del endpoint /api/
-    │   ├── email/        # endpoint /api/email
     │   ├── sheet/        # endpoint /api/sheet
     │   └── spotify/      # endpoint /api/spotify
     ├── credentials.py    # credenciales de las API's

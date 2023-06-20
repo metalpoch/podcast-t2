@@ -1,7 +1,6 @@
 import secrets
 
 from flask import jsonify, redirect, request, session
-
 from utils.spotify import Spotify
 
 from . import route

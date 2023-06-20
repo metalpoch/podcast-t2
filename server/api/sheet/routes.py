@@ -25,9 +25,13 @@ LANGS_MAP = {
 @route.route("/")
 def index():
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
-    res = requests.get(SHEET_URL, headers=header)
+    url = SHEET_URL
+    extension = request.args.get('extension')
+    if type(extension) == str:
+        url += '/' + extension
+    res = requests.get(url, headers=header)
     return res.json()
-
+     
 
 @route.route("/", methods=["POST"])
 def add():

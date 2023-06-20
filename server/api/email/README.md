@@ -84,6 +84,6 @@ La estructura del objeto JSON es la siguiente:
 ```
 
 - `client` (string, requerido): nombre del cliente que envía el email.
-- `date` (string, requerido): fecha y hora en que se envió el email (formato ISO 8601).
+- `date` (string, requerido): fecha y hora de la sesión (formato ISO 8601).
 - `lang` (string, requerido): idioma del contenido del email. Solo se permiten los siguientes idiomas: `es`, `en`, `de`, `fr`, `it`, `pt`, `ja`.
 - `recipient` (string, requerido): dirección de email del destinatario.

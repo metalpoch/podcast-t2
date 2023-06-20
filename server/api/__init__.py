@@ -1,10 +1,9 @@
-from flask import Flask
-from flask_mail import Mail
-
 from api.sheet import route as sheet
 from api.spotify import route as spotify
 from credentials import (MAIL_PASSWORD, MAIL_PORT, MAIL_SERVER, MAIL_USE_SSL,
                          MAIL_USE_TLS, MAIL_USERNAME, SECRET_KEY)
+from flask import Flask
+from flask_mail import Mail
 
 app = Flask(__name__)
 

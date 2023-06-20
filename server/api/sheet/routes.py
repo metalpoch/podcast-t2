@@ -1,11 +1,10 @@
 from datetime import datetime
 
+import api
 import requests
+from credentials import SHEET_SECRET, SHEET_URL
 from flask import jsonify, request
 from flask_mail import Message
-
-import api
-from credentials import SHEET_SECRET, SHEET_URL
 from utils.email import message_template
 from utils.validations import validate_json_sheet
 

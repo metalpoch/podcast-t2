@@ -37,9 +37,9 @@ def is_valid_date(date: str):
     return re.fullmatch(pattern, date) is not None
 
 
-def handler_email_error(field: str, data: str | None):
+def handler_spreadsheets_error(field: str, data: str | None):
     """
-    Handles errors related to email data.
+    Handles errors related to spreadsheets data.
 
     Parameters
     ----------
@@ -54,40 +54,42 @@ def handler_email_error(field: str, data: str | None):
         A dictionary containing an error message if the validation fails,
         or None if the validation succeeds.
     """
-    langs = ("es", "en", "de", "fr", "it", "pt", "ja")
+    language = ("es", "en", "de", "fr", "it", "pt", "ja")
+
     if not data:
         return {
             "error": "Unprocessable Entity",
-            "message": f"the {field} field is required",
+            "message": f"The {field} field is required",
         }
+
     elif type(data) != str:
         return {
             "error": "Unprocessable Entity",
-            "message": f"the {field} field was expected to be a string",
+            "message": f"The {field} field was expected to be a string",
         }
 
-    elif field == "recipient" and not is_valid_email(data):
+    elif field == "language" and data not in language:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"The {field} field not is in {language}",
+        }
+
+    elif field == "email" and not is_valid_email(data):
         return {
             "error": "Unprocessable Entity",
             "message": f"The {field} field was expected to be valid",
         }
 
-    elif field == "lang" and data not in langs:
-        return {
-            "error": "Unprocessable Entity",
-            "message": f"The {field} field not is in {langs}",
-        }
-
-    elif field == "date" and not is_valid_date(data):
+    elif field == "appointment" and not is_valid_date(data):
         return {
             "error": "Unprocessable Entity",
             "message": f"The {field} field was expected to be valid",
         }
 
 
-def validate_json_email(body: dict) -> tuple:
+def validate_json_sheet(body: dict) -> dict | None:
     """
-    Validates a JSON object containing email data.
+    Validates a JSON object containing spreadsheets data.
 
     Parameters
     ----------
@@ -101,10 +103,9 @@ def validate_json_email(body: dict) -> tuple:
         or the validated data if the validation succeeds.
     """
     # Validate each field in the JSON object
-    for field in ("client", "lang", "date", "recipient"):
+    fields = ("client", "email", "language", "appointment")
+    for field in fields:
         data = body.get(field)
-        error = handler_email_error(field, data)
+        error = handler_spreadsheets_error(field, data)
         if error:
-            return error, None, None, None, None
-
-    return None, body["client"], body["lang"], body["date"], body["recipient"]
+            return error

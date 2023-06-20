@@ -1,12 +1,14 @@
 from api.email import route as email
 from api.sheet import route as sheet
 from api.spotify import route as spotify
-from credentials import (MAIL_PASSWORD, MAIL_PORT, MAIL_SERVER, MAIL_USE_SSL,
+from credentials import (SECRET_KEY, MAIL_PASSWORD, MAIL_PORT, MAIL_SERVER, MAIL_USE_SSL,
                          MAIL_USE_TLS, MAIL_USERNAME)
 from flask import Flask
 from flask_mail import Mail
 
 app = Flask(__name__)
+
+app.secret_key = SECRET_KEY
 app.config["MAIL_SERVER"] = MAIL_SERVER
 app.config["MAIL_PORT"] = MAIL_PORT
 app.config["MAIL_USE_TLS"] = MAIL_USE_TLS

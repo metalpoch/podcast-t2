@@ -2,8 +2,8 @@ from datetime import datetime
 
 import api
 import requests
-from credentials import SHEET_SECRET, SHEET_URL
-from flask import jsonify, request
+from credentials import SHEET_SECRET, SHEET_SUBSCRIPTIONS_URL, SHEET_PODCAST_URL
+from flask import jsonify, request, abort
 from flask_mail import Message
 from utils.email import message_template
 from utils.validations import validate_json_sheet
@@ -23,18 +23,19 @@ LANGS_MAP = {
 
 
 @route.route("/")
-def index():
+@route.route("/<sheet>")
+def index(sheet="podcasts"):
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
-    url = SHEET_URL
-    extension = request.args.get('extension')
-    if type(extension) == str:
-        url += '/' + extension
+    if not sheet in ("subs", "podcasts"):
+        abort(404)
+
+    url = SHEET_SUBSCRIPTIONS_URL if sheet == "subs" else SHEET_PODCAST_URL
     res = requests.get(url, headers=header)
     return res.json()
-     
+
 
 @route.route("/", methods=["POST"])
-def add():
+def add_sub():
     body = request.get_json()
 
     error = validate_json_sheet(body)
@@ -48,7 +49,7 @@ def add():
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
     body["appointment"] = dt_object.strftime("%d/%m/%Y %H:%M:%S")
     body["subscription"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    res = requests.post(SHEET_URL, headers=header, json=body)
+    res = requests.post(SHEET_SUBSCRIPTIONS_URL, headers=header, json=body)
 
     # Create a Message object with the appointment details and send it using Flask-Mail
     sms = Message("Cita Podscat-T2 agendada", recipients=[body["email"]])

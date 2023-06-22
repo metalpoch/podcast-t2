@@ -1,10 +1,9 @@
 from os import environ
 
-from flask import Flask
-from flask_mail import Mail
-
 from api.sheet import route as sheet
 from api.spotify import route as spotify
+from flask import Flask
+from flask_mail import Mail
 
 app = Flask(__name__)
 

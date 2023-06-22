@@ -43,9 +43,9 @@ Estos script instalaran las dependencias del frontend y del backend en flask, us
 
 ## Credenciales de [Spotify Api's] e E-Mail 🗝️
 
-Para consumir la api de desarrollo de spotify se debe crear un fichero credentials.py dentro del directorio server, a la mismo nivel de main.py con el siguiente contenido
+Para consumir la api de desarrollo de spotify se deben crear las siguientes variables de entorno
 
-```python
+```bash
 SPOTIFY_REDIRECT = "" # url de redireccionamiento de spotify
 SPOTIFY_CLIENT_ID = "" # id de la cuenta de desarrollo de Spotify
 SPOTIFY_CLIENT_SECRET = "" # secret de la cuenta de desarrollo de Spotify
@@ -60,8 +60,6 @@ MAIL_SERVER = "smtp.gmail.com"
 MAIL_PORT = 465
 MAIL_USERNAME = ""
 MAIL_PASSWORD = ""
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
 ```
 
 ## Ejecucion local⚡

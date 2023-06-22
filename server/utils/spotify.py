@@ -1,9 +1,8 @@
+from os import environ
 from base64 import b64encode
 from urllib.parse import urlencode
 
 import requests
-from credentials import (SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET,
-                         SPOTIFY_REDIRECT)
 
 
 class Spotify:
@@ -49,9 +48,9 @@ class Spotify:
         """
         self.url_auth = "https://accounts.spotify.com/authorize/"
         self.url_token = "https://accounts.spotify.com/api/token/"
-        self.__client_id = SPOTIFY_CLIENT_ID
-        self.__client_secret = SPOTIFY_CLIENT_SECRET
-        self.__redirect_url = SPOTIFY_REDIRECT
+        self.__client_id = environ.get("SPOTIFY_CLIENT_ID", "")
+        self.__client_secret = environ.get("SPOTIFY_CLIENT_SECRET", "")
+        self.__redirect_url = environ.get("SPOTIFY_REDIRECT", "")
         self.scope = "user-read-private user-read-email"
 
     def url_auth_code_flow(self, state: str):

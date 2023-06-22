@@ -1,15 +1,19 @@
 from datetime import datetime
+from os import environ
 
-import api
-import requests
-from credentials import (SHEET_PODCAST_URL, SHEET_SECRET,
-                         SHEET_SUBSCRIPTIONS_URL)
 from flask import abort, jsonify, request
 from flask_mail import Message
+import requests
+
+import api
 from utils.email import message_template
 from utils.validations import validate_json_sheet
 
 from . import route
+
+SHEET_SECRET = environ.get("SHEET_SECRET")
+SHEET_PODCAST_URL = environ.get("SHEET_PODCAST_URL", "")
+SHEET_SUBSCRIPTIONS_URL = environ.get("SHEET_SUBSCRIPTIONS_URL", "")
 
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 LANGS_MAP = {

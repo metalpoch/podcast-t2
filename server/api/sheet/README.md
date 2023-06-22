@@ -8,21 +8,23 @@ El script comienza con las siguientes importaciones:
 
 ```python
 from datetime import datetime
-import requests
+from os import environ
+
 from flask import jsonify, request
 from flask_mail import Message
+import requests
+
 import api
-from credentials import SHEET_SECRET, SHEET_URL
 from utils.email import message_template
 from utils.validations import validate_json_sheet
 ```
 
 - `datetime` se utiliza para trabajar con fechas y horas en Python.
+- `environ` se utiliza para obtener las variables de entorno.
 - `requests` se utiliza para realizar solicitudes HTTP a la hoja de cálculo.
 - `flask` es el módulo principal de Flask, utilizado para crear la aplicación web y manejar las solicitudes HTTP.
 - `flask_mail` se utiliza para enviar correos electrónicos utilizando Flask.
 - `api` es un módulo personalizado que contiene funciones y configuraciones específicas de la aplicación.
-- `credentials` es un módulo personalizado que contiene las credenciales de acceso a la hoja de cálculo.
 - `utils.email` es un módulo personalizado que contiene funciones relacionadas con el envío de correos electrónicos.
 - `utils.validations` es un módulo personalizado que contiene funciones relacionadas con la validación de datos.
 

@@ -1,5 +1,5 @@
-
 # Podcast T2
+
 <img width="150" src="https://cdn.leonardo.ai/users/9698033d-86b5-411b-8d8f-fc9209ef1ff6/generations/2bd8e45a-f69b-4040-a89c-a4641945a0fe/DreamShaper_v5_STICKER_A_detailed_illustration_a_print_of_a_po_2.jpg"><a href="https://github.com/metalpoch/podcast-t2"><img src="https://readme-typing-svg.demolab.com?font=VT323&size=27&duration=1000&vCenter=true&repeat=false&width=435&lines=Escuchamos...;Mejoramos...;Promocionamos...;Publicamos...;%F0%9F%8E%A7+Para+hacer+ralidad+tu+mejor+Podcast." alt="Typing SVG" /></a>
 
 ¡Bienvenido al servicio web líder en creación de podcast para Spotify! Con nuestra herramienta fácil de usar, puedes crear y publicar tus episodios en Spotify de una manera sencilla y eficiente.
@@ -9,20 +9,22 @@
 Esta landing page actualmente trabaja con las siguientes tecnologías:
 
 - [Python]: es un lenguaje de alto nivel de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.
-    -  [Flask]: es un micromarco utilizado para el desarrollo de aplicaciones web en Python.
-    -  [Flask-Mail]: es una extensión de Flask que permite enviar correos electrónicos desde una aplicación web Flask.
+  - [Flask]: es un micromarco utilizado para el desarrollo de aplicaciones web en Python.
+  - [Flask-Mail]: es una extensión de Flask que permite enviar correos electrónicos desde una aplicación web Flask.
 - [SheetDB]: es una plataforma en línea que permite convertir las hojas de cálculo de Google en una API JSON.
-    
 - [Node.js]: es un entorno de ejecución para JavaScript construido con V8, motor de JavaScript de Chrome.
-    - [React]: es una biblioteca de JavaScript utilizada para construir interfaces de usuario interactivas en aplicaciones web.
+  - [React]: es una biblioteca de JavaScript utilizada para construir interfaces de usuario interactivas en aplicaciones web.
 
 ## Instalación y uso de manera local 💾
 
 ### Clona este repositorio [GitHub]
+
 ```bash
 git clone https://github.com/metalpoch/podcast-t2.git
 ```
+
 ### Instale las dependencias
+
 ¡La instalacion de las dependencias es mas facil que nunca! Solo ejecute uno de los siguientes script basado en su sistema operativo.
 
 ```bash
@@ -36,13 +38,14 @@ npm run installOnLinux
 cd podcast-t2
 npm run installOnWindows
 ```
+
 Estos script instalaran las dependencias del frontend y del backend en flask, usando los entornos virtuales e instalando las dependencias en dichos entornos.
 
-## Credenciales de [Spotify Api's] e E-Mail 🗝️ 
+## Credenciales de [Spotify Api's] e E-Mail 🗝️
 
-Para consumir la api de desarrollo de spotify se debe crear un fichero credentials.py dentro del directorio server, a la mismo nivel de main.py con el siguiente contenido
+Para consumir la api de desarrollo de spotify se deben crear las siguientes variables de entorno
 
-```python
+```bash
 SPOTIFY_REDIRECT = "" # url de redireccionamiento de spotify
 SPOTIFY_CLIENT_ID = "" # id de la cuenta de desarrollo de Spotify
 SPOTIFY_CLIENT_SECRET = "" # secret de la cuenta de desarrollo de Spotify
@@ -55,17 +58,18 @@ MAIL_SERVER = "smtp.gmail.com"
 MAIL_PORT = 465
 MAIL_USERNAME = ""
 MAIL_PASSWORD = ""
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
 ```
 
 ## Ejecucion local⚡
+
 Esta es la parte mas dificil y complicada debido a la gran cantidad de comandos que hay que utilizar
+
 ```bash
 npm run dev # ¡Listo!
 ```
 
 ## Estructura del proyecto 🏗️
+
 ```
 ├── README.md           # Esta humilde documentación que estas leyendo 😉
 ├── client              # frontend creado con Vite
@@ -93,4 +97,4 @@ npm run dev # ¡Listo!
 [vite]: https://vitejs.dev/
 [spotify]: https://open.spotify.com/
 [spotify api's]: https://developer.spotify.com/
-[SheetDB]: https://sheetdb.io/
+[sheetdb]: https://sheetdb.io/

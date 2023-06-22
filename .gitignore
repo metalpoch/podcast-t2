@@ -30,5 +30,5 @@ server/venv
 *.sln
 *.sw?
 
-
+.env
 .github

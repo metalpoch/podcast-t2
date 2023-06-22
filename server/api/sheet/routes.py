@@ -26,6 +26,19 @@ LANGS_MAP = {
 @route.route("/")
 @route.route("/<sheet>")
 def index(sheet="podcasts"):
+    """
+    Handles the index request and returns a JSON response with the data from the specified sheet.
+
+    Parameters
+    ----------
+    sheet : str, optional
+        The name of the sheet to retrieve data from. Can be either "subs" or "podcasts". Defaults to "podcasts".
+
+    Returns
+    -------
+    str
+        A JSON response with the data from the specified sheet or an error message.
+    """
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
     if not sheet in ("subs", "podcasts"):
         abort(404)
@@ -37,6 +50,14 @@ def index(sheet="podcasts"):
 
 @route.route("/", methods=["POST"])
 def add_sub():
+    """
+    Handles the add subscription request and returns a JSON response with the new subscription data.
+
+    Returns
+    -------
+    str
+        A JSON response with the new subscription data or an error message.
+    """
     body = request.get_json()
 
     error = validate_json_sheet(body)

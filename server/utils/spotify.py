@@ -1,5 +1,5 @@
-from os import environ
 from base64 import b64encode
+from os import environ
 from urllib.parse import urlencode
 
 import requests

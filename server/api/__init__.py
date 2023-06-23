@@ -3,8 +3,8 @@ from os import environ
 from api.sheet import route as sheet
 from api.spotify import route as spotify
 from flask import Flask
-from flask_mail import Mail
 from flask_cors import CORS
+from flask_mail import Mail
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": environ.get("FRONTEND_URL")}})

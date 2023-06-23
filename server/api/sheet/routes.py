@@ -45,7 +45,7 @@ def index(sheet="podcasts"):
     if not sheet in ("subs", "podcasts"):
         abort(404)
 
-    url = SHEET_SUBSCRIPTIONS_URL + '?sheet=' + sheet
+    url = SHEET_SUBSCRIPTIONS_URL + "?sheet=" + sheet
     res = requests.get(url, headers=header)
     return res.json()
 

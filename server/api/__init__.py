@@ -4,8 +4,10 @@ from api.sheet import route as sheet
 from api.spotify import route as spotify
 from flask import Flask
 from flask_mail import Mail
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "https://podcast-t2.vercel.app/"}})
 
 app.secret_key = environ.get("SECRET_KEY")
 app.config["MAIL_SERVER"] = environ.get("MAIL_SERVER")

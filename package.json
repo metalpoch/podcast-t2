@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Servicio web líder en creación de podcast para Spotify",
   "scripts": {
-    "dev": "concurrently \"cd client && npm run dev\" \"cd server && venv/bin/python main.py\"",
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && venv\\Scripts\\python main.py\" \"cd server && venv/bin/python main.py\"",
     "installOnLinux": "npm install && concurrently \"cd client && npm install\" \"cd server && python -m venv venv && venv/bin/pip install -r requeriments.txt\"",
-    "installOnWindows": "npm install && cd client && npm install && cd ../server && python -m venv venv && venv\\Scripts\\activate && pip install -r requirements.txt && deactivate && cd .."
+    "installOnWindows": "npm install && concurrently \"cd client && npm install\" \"cd server && python -m venv venv && venv\\Scripts\\pip install -r requeriments.txt\""
   },
   "keywords": ["spotify", "podcast", "landing page", "react", "python", "flask"],
   "authors": ["Team 2 Social Oplesk", "Keiber Urbila <keiberup.dev@gmail.com>"],

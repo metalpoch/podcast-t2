@@ -11,7 +11,6 @@ from utils.validations import validate_json_sheet
 from . import route
 
 SHEET_SECRET = environ.get("SHEET_SECRET")
-SHEET_PODCAST_URL = environ.get("SHEET_PODCAST_URL", "")
 SHEET_SUBSCRIPTIONS_URL = environ.get("SHEET_SUBSCRIPTIONS_URL", "")
 
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -46,7 +45,7 @@ def index(sheet="podcasts"):
     if not sheet in ("subs", "podcasts"):
         abort(404)
 
-    url = SHEET_SUBSCRIPTIONS_URL if sheet == "subs" else SHEET_PODCAST_URL
+    url = SHEET_SUBSCRIPTIONS_URL + '?sheet=' + sheet
     res = requests.get(url, headers=header)
     return res.json()
 

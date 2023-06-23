@@ -34,7 +34,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULL_REQUEST_ACTION }}
-          title: "Format Python code with Black and isort"
-          commit-message: "style: format Python code with Black and isort :art:"
+          title: "Autoformat Python code by GitHub Action"
+          commit-message: "style(🤖): 🎨format Python code with Black and isort"
           body: |
             There appear to be some Python formatting issues in this pull request. I have automatically formatted the code using Black and isort. Please review the changes and merge this pull request if they look good to you.

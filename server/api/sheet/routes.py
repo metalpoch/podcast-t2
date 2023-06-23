@@ -1,18 +1,16 @@
 from datetime import datetime
 from os import environ
 
+import api
+import requests
 from flask import abort, jsonify, request
 from flask_mail import Message
-import requests
-
-import api
 from utils.email import message_template
 from utils.validations import validate_json_sheet
 
 from . import route
 
 SHEET_SECRET = environ.get("SHEET_SECRET")
-SHEET_PODCAST_URL = environ.get("SHEET_PODCAST_URL", "")
 SHEET_SUBSCRIPTIONS_URL = environ.get("SHEET_SUBSCRIPTIONS_URL", "")
 
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -30,17 +28,38 @@ LANGS_MAP = {
 @route.route("/")
 @route.route("/<sheet>")
 def index(sheet="podcasts"):
+    """
+    Handles the index request and returns a JSON response with the data from the specified sheet.
+
+    Parameters
+    ----------
+    sheet : str, optional
+        The name of the sheet to retrieve data from. Can be either "subs" or "podcasts". Defaults to "podcasts".
+
+    Returns
+    -------
+    str
+        A JSON response with the data from the specified sheet or an error message.
+    """
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
     if not sheet in ("subs", "podcasts"):
         abort(404)
 
-    url = SHEET_SUBSCRIPTIONS_URL if sheet == "subs" else SHEET_PODCAST_URL
+    url = SHEET_SUBSCRIPTIONS_URL + '?sheet=' + sheet
     res = requests.get(url, headers=header)
     return res.json()
 
 
 @route.route("/", methods=["POST"])
 def add_sub():
+    """
+    Handles the add subscription request and returns a JSON response with the new subscription data.
+
+    Returns
+    -------
+    str
+        A JSON response with the new subscription data or an error message.
+    """
     body = request.get_json()
 
     error = validate_json_sheet(body)

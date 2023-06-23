@@ -1,10 +1,6 @@
 # Documentación Del Endpoint Sheet
 
-En este archivo README.md se proporcionará una documentación en español para el script proporcionado. El script es un ejemplo de una aplicación Flask que maneja solicitudes HTTP para obtener y agregar datos a una hoja de cálculo. A continuación, se explicará cada función y su funcionalidad.
-
 ### Importaciones
-
-El script comienza con las siguientes importaciones:
 
 ```python
 from datetime import datetime
@@ -32,13 +28,18 @@ from utils.validations import validate_json_sheet
 
 ```python
 @route.route("/")
-def index():
+@route.route("/<sheet>")
+def index(sheet="podcasts"):
     header = {"Authorization": f"Bearer {SHEET_SECRET}"}
-    res = requests.get(SHEET_URL, headers=header)
+    if not sheet in ("subs", "podcasts"):
+        abort(404)
+
+    url = SHEET_SUBSCRIPTIONS_URL if sheet == "subs" else SHEET_PODCAST_URL
+    res = requests.get(url, headers=header)
     return res.json()
 ```
 
-Esta ruta maneja una solicitud GET a la raíz de la aplicación. Se obtiene la hoja de cálculo utilizando una solicitud GET a la URL de la hoja de cálculo con el encabezado de autorización. Finalmente, se devuelve la respuesta en formato JSON.
+Estas rutas manejan una solicitud GET a la raíz de la aplicación o a una hoja específica. Se verifica que el parámetro sheet sea válido, y se aborta la solicitud si no lo es. Se obtiene la hoja de cálculo correspondiente utilizando una solicitud GET a la URL adecuada con el encabezado de autorización. Finalmente, se devuelve la respuesta en formato JSON.
 
 ### Ruta `"/"`, métodos `["POST"]`
 

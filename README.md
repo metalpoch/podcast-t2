@@ -51,7 +51,9 @@ SPOTIFY_CLIENT_ID = "" # id de la cuenta de desarrollo de Spotify
 SPOTIFY_CLIENT_SECRET = "" # secret de la cuenta de desarrollo de Spotify
 
 SHEET_SECRET = "" # secret de la hoja ded calculo sheetdb.io
-SHEET_URL = "" # url de la hoja de calculo
+SHEET_PODCAST_URL = "" # url de la hoja de calculo de podcasts finalizados
+SHEET_SUBSCRIPTIONS_URL = "" # url de la hoja de calculo de clientes subscritos
+
 
 # Esta configuración SMTP esta basada en el servicio de Google
 MAIL_SERVER = "smtp.gmail.com"

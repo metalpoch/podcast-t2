@@ -62,9 +62,9 @@ def add_sub():
     """
     body = request.get_json()
 
-    error = validate_json_sheet(body)
-    if error:
-        res = jsonify(error)
+    body = validate_json_sheet(body)
+    if body.get("error"):
+        res = jsonify(body)
         res.status_code = 422
         return res
 

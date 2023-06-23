@@ -37,7 +37,7 @@ def is_valid_date(date: str):
     return re.fullmatch(pattern, date) is not None
 
 
-def handler_spreadsheets_error(field: str, data: str | None):
+def handler_spreadsheets_error(field: str, data: str):
     """
     Handles errors related to spreadsheets data.
 
@@ -87,7 +87,7 @@ def handler_spreadsheets_error(field: str, data: str | None):
         }
 
 
-def validate_json_sheet(body: dict) -> dict | None:
+def validate_json_sheet(body: dict) -> dict:
     """
     Validates a JSON object containing spreadsheets data.
 
@@ -105,7 +105,9 @@ def validate_json_sheet(body: dict) -> dict | None:
     # Validate each field in the JSON object
     fields = ("client", "email", "language", "appointment")
     for field in fields:
-        data = body.get(field)
+        data = body.get(field, "")
         error = handler_spreadsheets_error(field, data)
         if error:
             return error
+
+    return body

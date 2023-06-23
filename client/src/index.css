@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=Nunito:wght@600;700&display=swap');
+
+:root {
+	--clr-darkest: #0b0b1a;
+	--clr-dark: #141630;
+	--clr-lightest: #ffffff;
+	--clr-light: #e9efff;
+	--clr-accent-1: #cb3cc6;
+	--clr-accent-2: #5c42d4;
+
+	--gradient: linear-gradient(
+		90deg,
+		var(--clr-accent-1),
+		var(--clr-accent-2)
+	);
+
+	--font-titles: 'Kanit', sans-serif;
+	--font-text: 'Nunito', sans-serif;
+
+	--font-size-text: 1.25rem;
+
+	--padding-y: 2rem;
+
+	font-family: var(--font-text);
+	font-size: 16px;
+}
+
+* {
+	scroll-behavior: smooth;
+}
+
+a {
+	font-size: var(--font-size-text);
+	text-decoration: inherit;
+}
+
+p {
+	font-size: var(--font-size-text);
+}
+
+.textGradient {
+	background: var(--gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+}
+
+.cta {
+	text-decoration: underline;
+}
+
+.card {
+	background: var(--clr-darkest);
+	border-radius: 1.25rem;
+}
+
+.card:hover {
+	border: 3px solid var(--clr-accent-1);
+}
+
+.title {
+	font-family: var(--font-titles);
+	font-weight: 600;
+}
+
+h1 {
+	font-size: 3.5rem;
+}
+
+h2 {
+	font-size: 2.625rem;
+}
+
+h3 {
+	font-size: 1.875rem;
+}
+
+.btn {
+	padding: 1rem 3.75rem;
+	border-radius: 50rem;
+}

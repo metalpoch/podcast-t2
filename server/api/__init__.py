@@ -1,6 +1,6 @@
 from os import environ
 
-from flask import Flask, jsonify, request
+from flask import Flask
 from flask_cors import CORS
 from flask_mail import Mail
 
@@ -8,7 +8,7 @@ from api.sheet import route as sheet
 from api.spotify import route as spotify
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": environ.get("FRONTEND_URL")}})
 
 app.secret_key = environ.get("SECRET_KEY")
 app.config["MAIL_SERVER"] = environ.get("MAIL_SERVER")

@@ -7,12 +7,7 @@ from flask_cors import CORS
 from flask_mail import Mail
 
 app = Flask(__name__)
-CORS(
-    app,
-    resources={
-        r"/*": {"origins": [environ.get("FRONTEND_URL"), "http://localhost:5173/"]}
-    },
-)
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.secret_key = environ.get("SECRET_KEY")
 app.config["MAIL_SERVER"] = environ.get("MAIL_SERVER")

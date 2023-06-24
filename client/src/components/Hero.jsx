@@ -5,7 +5,7 @@ import Logo from "../assets/PodTalk ogo.png";
 export default function Hero() {
   return (
     <>
-      <div className={`container ${Style.flex}`} id="spotify">
+      <div className={`container ${Style.flex}`}>
         <section className={Style.colLeft}>
           <img src={Logo} />
           <h1 className="title">
@@ -16,7 +16,7 @@ export default function Hero() {
             en el mundo del podcasting
           </p>
           <br />
-          <a className={Style.btn} href="#solicitar">
+          <a className={Style.btn} href="#service">
             Solicitar
           </a>
         </section>

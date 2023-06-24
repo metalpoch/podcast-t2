@@ -41,7 +41,7 @@ def spotify_callback():
         response = jsonify({"error": error})
         response.status_code = 400
         return response
-    elif state != session["state"]:
+    elif state != session.get("state"):
         response = jsonify({"error": "state_mismatch"})
         response.status_code = 400
         return response

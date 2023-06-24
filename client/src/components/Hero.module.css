@@ -1,0 +1,53 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.colLeft,
+.colRight {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.colLeft {
+  padding-right: 15%;
+}
+
+.colRight {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.image {
+  width: 80%;
+  border-radius: 85% 50% 65% 30%;
+}
+
+.btn {
+  background-image: var(--gradient);
+  background-color: black;
+  padding: 0.7em 5em;
+  border-radius: 5rem;
+  font-size: 1em;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .flex {
+    display: block;
+    /*flex-direction: column;*/
+  }
+  .image {
+    position: absolute;
+    top: 5em;
+    left: 25%;
+    width: 300px;
+    border-radius: 85% 50% 65% 30%;
+    filter: brightness(85%);
+    z-index: -1;
+  }
+}

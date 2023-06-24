@@ -29,6 +29,16 @@
 	scroll-behavior: smooth;
 }
 
+body {
+	background: var(--clr-darkest);
+	color: var(--clr-lightest);
+}
+
+.container {
+	max-width: 1160px;
+	margin: 0 auto;
+}
+
 a {
 	font-size: var(--font-size-text);
 	text-decoration: inherit;

@@ -1,7 +1,6 @@
 import json
 
 from flask import jsonify, request
-
 from utils.spotify import Spotify
 
 from . import route

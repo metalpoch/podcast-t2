@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+const SPOTIFY_URL_TOKEN =
+  import.meta.env.VITE_SPOTIFY_URL_TOKEN || process.env.SPOTIFY_URL_TOKEN;
+
 export default function useSpotify() {
   const [isLogin, setIsLogin] = useState(false);
   const [error, setError] = useState(null);
@@ -17,7 +20,7 @@ export default function useSpotify() {
       }
 
       window.history.pushState(null, null, "/");
-      const url = import.meta.env.VITE_SPOTIFY_URL_TOKEN;
+      const url = SPOTIFY_URL_TOKEN;
       const options = {
         method: "POST",
         body: JSON.stringify(data),

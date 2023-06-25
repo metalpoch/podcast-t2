@@ -1,0 +1,19 @@
+.flex {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	align-items: center;
+}
+
+.podcastsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	max-height: 450px;
+	overflow-y: scroll;
+}
+
+iframe {
+	flex-basis: 90%;
+	border-radius: 1.25rem;
+}

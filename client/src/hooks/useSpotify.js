@@ -3,34 +3,39 @@ import { useState, useEffect } from "react";
 const SPOTIFY_URL_TOKEN = import.meta.env.VITE_SPOTIFY_URL_TOKEN;
 
 export default function useSpotify() {
-	const [isLogin, setIsLogin] = useState(false);
-	const [error, setError] = useState(null);
+  const [data, setData] = useState({});
 
-	useEffect(() => {
-		if (window.location.search) {
-			const params = new URLSearchParams(window.location.search);
-			const data = {
-				code: params.get("code"),
-				state: params.get("state"),
-			};
+  useEffect(() => {
+    if (window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      window.history.pushState(null, null, "/");
 
-			if (data.state !== window.sessionStorage.getItem("state")) {
-				setError({ error: "state_mismatch" });
-			}
+      const data = {
+        code: params.get("code"),
+        state: params.get("state"),
+      };
 
-			window.history.pushState(null, null, "/");
-			const url = SPOTIFY_URL_TOKEN;
-			const options = {
-				method: "POST",
-				body: JSON.stringify(data),
-			};
+      if (data.state !== window.sessionStorage.getItem("state")) {
+        setData({ error: "state_mismatch" });
+      } else {
+        const url = SPOTIFY_URL_TOKEN;
+        const options = {
+          method: "POST",
+          body: JSON.stringify(data),
+        };
 
-			fetch(url, { ...options })
-				.then((res) => res.json())
-				.then(() => setIsLogin(true))
-				.catch((error) => setError(error));
-		}
-	}, []);
+        fetch(url, { ...options })
+          .then((res) => res.json())
+          .then((res) =>
+            setData(typeof res === "string" ? JSON.parse(res) : res)
+          )
+          .catch((error) => {
+            alert(JSON.stringify({ error, msg: error.message }));
+            console.error(error);
+          });
+      }
+    }
+  }, []);
 
-	return { isLogin, error };
+  return data;
 }

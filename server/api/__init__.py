@@ -9,7 +9,6 @@ from flask_mail import Mail
 app = Flask(__name__)
 CORS(app)
 
-app.secret_key = environ.get("SECRET_KEY")
 app.config["MAIL_SERVER"] = environ.get("MAIL_SERVER")
 app.config["MAIL_PORT"] = environ.get("MAIL_PORT")
 app.config["MAIL_USE_TLS"] = False

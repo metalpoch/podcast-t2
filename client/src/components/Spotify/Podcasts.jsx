@@ -1,16 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SheetContext } from "../../context/SheetContext";
 import Style from "./Podcasts.module.css";
 
 export default function Podcasts() {
+  const [podcasts, setPodcasts] = useState([]);
   const { podcasters } = useContext(SheetContext);
 
-  const podcasts = podcasters.data
-    .map((podcast) => ({
-      id: podcast.client,
-      url: podcast.url,
-    }))
-    .filter((pod) => pod.url !== "");
+  useEffect(() => {
+    if (podcasters.data)
+      setPodcasts(
+        podcasters.data
+          .map((podcast) => ({
+            id: podcast.client,
+            url: podcast.url,
+          }))
+          .filter((pod) => pod.url !== "")
+      );
+  }, [podcasters]);
+
+  if (podcasts.loading) return <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>;
 
   return (
     <div className={`container padding-y ${Style.flex}`}>

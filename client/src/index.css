@@ -107,10 +107,12 @@ p {
 
 ::-webkit-scrollbar-track {
 	background: var(--clr-accent-2);
+	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
 	background: var(--clr-light);
+	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

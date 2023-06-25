@@ -16,6 +16,10 @@
 	align-items: center;
 }
 
+.bgDark {
+	background-color: var(--clr-dark);
+}
+
 @media (max-width: 900px) {
 	.flex {
 		flex-direction: column;

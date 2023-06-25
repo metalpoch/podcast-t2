@@ -31,7 +31,7 @@ export default function useSpotify() {
             setData(typeof res === "string" ? JSON.parse(res) : res)
           )
           .catch((error) => {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify({ error, msg: error.message }));
             console.error(error);
           });
       }

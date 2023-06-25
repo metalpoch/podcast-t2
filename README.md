@@ -46,20 +46,20 @@ Estos script instalaran las dependencias del frontend y del backend en flask, us
 Para consumir la api de desarrollo de spotify se deben crear las siguientes variables de entorno
 
 ```bash
-SPOTIFY_REDIRECT = "" # url de redireccionamiento de spotify
-SPOTIFY_CLIENT_ID = "" # id de la cuenta de desarrollo de Spotify
-SPOTIFY_CLIENT_SECRET = "" # secret de la cuenta de desarrollo de Spotify
+FRONTEND_URL= # url de del frontend para habilitar el CORS
+SECRET_KEY= # Llave secreta para el manejo de sesiones de flask
 
-SHEET_SECRET = "" # secret de la hoja ded calculo sheetdb.io
-SHEET_PODCAST_URL = "" # url de la hoja de calculo de podcasts finalizados
-SHEET_SUBSCRIPTIONS_URL = "" # url de la hoja de calculo de clientes subscritos
+SHEET_SECRET= # secret de la hoja ded calculo sheetdb.io
+SHEET_SUBSCRIPTIONS_URL= # url de la hoja de calculo de clientes subscritos
 
+SPOTIFY_REDIRECT= # url de redireccionamiento de spotify
+SPOTIFY_CLIENT_ID= # id de la cuenta de desarrollo de Spotify
+SPOTIFY_CLIENT_SECRET= # secret de la cuenta de desarrollo de Spotify
 
-# Esta configuración SMTP esta basada en el servicio de Google
-MAIL_SERVER = "smtp.gmail.com"
-MAIL_PORT = 465
-MAIL_USERNAME = ""
-MAIL_PASSWORD = ""
+MAIL_SERVER=smtp.gmail.com # server SMTP de Google
+MAIL_PORT=465 # puerto SMTP de Google
+MAIL_USERNAME= # nombre de usuario gmail
+MAIL_PASSWORD= # contraseña de aplicación
 ```
 
 ## Ejecucion local⚡
@@ -77,7 +77,7 @@ npm run dev # ¡Listo!
 ├── client              # frontend creado con Vite
 │   ├── index.html        # html inicial de React
 │   ├── public/           # directorio para el almacenamiento favicon.ico
-│   ├── src               # directorio principal de los componentes
+│   ├── src               # directorio principal de los componentes y hooks de React
 └── server              # backend contruido con Flask blueprints
     ├── api               # modulos por ruta del endpoint /api/
     │   ├── sheet/        # endpoint /api/sheet

@@ -1,8 +1,17 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Spotify from "./components/Spotify/Spotify";
+import Testimonial from "./components/Testimonial";
+import Form from "./components/Form";
+
 export default function App() {
   return (
     <>
-      <h1>Hello Word</h1>
-      <h2>From this landing page</h2>
+      <Navbar />
+      <Hero />
+      <Spotify />
+      <Testimonial />
+      <Form />
     </>
   );
 }

@@ -1,6 +1,6 @@
-import secrets
+import json
 
-from flask import jsonify, redirect, request, session
+from flask import jsonify, request
 from utils.spotify import Spotify
 
 from . import route
@@ -8,63 +8,34 @@ from . import route
 spotify = Spotify()
 
 
-@route.route("/auth/")
+@route.route("/auth/", methods=["POST"])
 def auth():
-    """
-    Handles the Spotify authorization URL and redirects the user to the authorization URL.
+    data = json.loads(request.data)
+    code = data.get("code")
 
-    Returns
-    -------
-    str
-        A redirect response to the authorization URL or a JSON response with an error message.
-    """
-    session["state"] = state = secrets.token_hex(120)
-    url = spotify.url_auth_code_flow(state)
-    return redirect(url)
+    response = spotify.access_token(code)
+    if response.get("error"):
+        return jsonify(response["error"]), response["status_code"]
 
-
-@route.route("/auth/callback/")
-def spotify_callback():
-    """
-    Handles the Spotify callback URL and returns a JSON response with the access token.
-
-    Returns
-    -------
-    str
-        A JSON response with the access token.
-    """
-    error = request.args.get("error")
-    state = str(request.args.get("state"))
-    code = str(request.args.get("code"))
-
-    if error:
-        response = jsonify({"error": error})
-        response.status_code = 400
-        return response
-    elif state != session["state"]:
-        response = jsonify({"error": "state_mismatch"})
-        response.status_code = 400
-        return response
-
-    response = spotify.get_token(code)
-
-    return jsonify(response)
+    return jsonify(
+        {
+            "access_token": response["access_token"],
+            "refresh_token": response["refresh_token"],
+        }
+    )
 
 
-@route.route("/auth/refresh/")
-def refresh_auth():
-    """
-    Handles the refresh token request and returns a JSON response with the new access token.
-
-    Returns
-    -------
-    str
-        A JSON response with the new access token or an error message.
-    """
+@route.route("/auth/refresh")
+def refresh():
     refresh_token = str(request.args.get("token"))
-    if not refresh_token:
-        return jsonify({"error": "refresh_token empty"})
 
-    response = spotify.refresh_auth(refresh_token=refresh_token)
+    response = spotify.refresh(refresh_token)
 
-    return jsonify(response)
+    if response.get("error"):
+        return jsonify(response["error"]), response["status_code"]
+
+    return jsonify(
+        {
+            "access_token": response["access_token"],
+        }
+    )

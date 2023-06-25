@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=Nunito:wght@600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=Nunito:wght@600;700&display=swap");
 
 :root {
 	--clr-darkest: #0b0b1a;
@@ -14,8 +14,8 @@
 		var(--clr-accent-2)
 	);
 
-	--font-titles: 'Kanit', sans-serif;
-	--font-text: 'Nunito', sans-serif;
+	--font-titles: "Kanit", sans-serif;
+	--font-text: "Nunito", sans-serif;
 
 	--font-size-text: 1.25rem;
 
@@ -27,6 +27,20 @@
 
 * {
 	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--clr-darkest);
+	color: var(--clr-light);
+}
+
+.container {
+	max-width: 1160px;
+	margin: 0 auto;
+}
+
+.padding-y {
+	padding: var(--padding-y) 0;
 }
 
 a {
@@ -41,8 +55,8 @@ p {
 .textGradient {
 	background: var(--gradient);
 	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
 	background-clip: text;
+	-webkit-text-fill-color: transparent;
 	text-fill-color: transparent;
 }
 
@@ -61,7 +75,9 @@ p {
 
 .title {
 	font-family: var(--font-titles);
+	color: var(--clr-lightest);
 	font-weight: 600;
+	margin: 0;
 }
 
 h1 {
@@ -76,7 +92,29 @@ h3 {
 	font-size: 1.875rem;
 }
 
+p {
+	line-height: 1.75rem;
+}
+
 .btn {
-	padding: 1rem 3.75rem;
-	border-radius: 50rem;
+	padding: 0.7rem 5rem;
+	border-radius: 5rem;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--clr-accent-2);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--clr-light);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--clr-lightest);
 }

@@ -16,15 +16,14 @@ def auth():
 
     response = spotify.access_token(code)
     if response.get("error"):
-        res = jsonify(response["error"])
-        res.status_code = response["status_code"]
+        return jsonify(response["error"]), response["status_code"]
 
-    res = {
-        "access_token": response["access_token"],
-        "refresh_token": response["refresh_token"],
-    }
-
-    return jsonify(res)
+    return jsonify(
+        {
+            "access_token": response["access_token"],
+            "refresh_token": response["refresh_token"],
+        }
+    )
 
 
 @route.route("/auth/refresh")
@@ -34,11 +33,10 @@ def refresh():
     response = spotify.refresh(refresh_token)
 
     if response.get("error"):
-        res = jsonify(response["error"])
-        res.status_code = response["status_code"]
+        return jsonify(response["error"]), response["status_code"]
 
-    res = {
-        "access_token": response["access_token"],
-    }
-
-    return jsonify(res)
+    return jsonify(
+        {
+            "access_token": response["access_token"],
+        }
+    )

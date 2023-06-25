@@ -2,13 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import { SheetContext } from "../context/SheetContext";
 
 export default function Testimonial() {
+  const [error, setError] = useState(null);
   const [testimonials, setTestimoniasl] = useState([]);
-  const { podcasters } = useContext(SheetContext);
+  const {
+    podcasters: { data, loading },
+  } = useContext(SheetContext);
 
   useEffect(() => {
-    if (podcasters.data)
+    if (data && data.error) setError(data.error);
+    if (data && !data.error)
       setTestimoniasl(
-        podcasters.data.map((client, index) => ({
+        data.map((client, index) => ({
           id: index,
           name: client.name,
           picture: client.picture,
@@ -16,7 +20,10 @@ export default function Testimonial() {
           message: client.reviewMessage,
         }))
       );
-  }, [podcasters]);
+  }, [data]);
+
+  if (loading) return <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>;
+  if (error) return <h1>{error}</h1>;
 
   return (
     <div className="container">
@@ -25,7 +32,6 @@ export default function Testimonial() {
         style={{ background: "brown", marginTop: 0, padding: 400 }}
       >
         TESTIMONIALS
-        {podcasters.loading && <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>}
         {testimonials.map((user) => (
           <div key={user.id} className="card">
             <img src={user.picture} />

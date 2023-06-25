@@ -3,22 +3,27 @@ import { SheetContext } from "../../context/SheetContext";
 import Style from "./Podcasts.module.css";
 
 export default function Podcasts() {
+  const [error, setError] = useState(null);
   const [podcasts, setPodcasts] = useState([]);
-  const { podcasters } = useContext(SheetContext);
+  const {
+    podcasters: { data, loading },
+  } = useContext(SheetContext);
 
   useEffect(() => {
-    if (podcasters.data)
+    if (data && data.error) setError(data.error);
+    if (data && !data.error)
       setPodcasts(
-        podcasters.data
+        data
           .map((podcast) => ({
             id: podcast.client,
             url: podcast.url,
           }))
           .filter((pod) => pod.url !== "")
       );
-  }, [podcasters]);
+  }, [data]);
 
-  if (podcasts.loading) return <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>;
+  if (loading) return <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>;
+  if (error) return <h1>{error}</h1>;
 
   return (
     <div className={`container padding-y ${Style.flex}`}>

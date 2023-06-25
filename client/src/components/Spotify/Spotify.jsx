@@ -4,8 +4,10 @@ import Style from "./Spotify.module.css";
 import useSpotify from "../../hooks/useSpotify";
 
 export default function Spotify() {
-  const { isLogin, error } = useSpotify();
-  if (error) alert(error);
+  const data = useSpotify();
+
+  if (data.error) alert(JSON.stringify(data));
+
   return (
     <div className={`container ${Style.flex}`} id="spotify">
       <section className={Style.colLeft}>
@@ -24,7 +26,7 @@ export default function Spotify() {
         </p>
       </section>
       <section className={Style.colRight}>
-        {isLogin ? <Podcasts /> : <Login />}
+        {data.access_token ? <Podcasts /> : <Login />}
       </section>
     </div>
   );

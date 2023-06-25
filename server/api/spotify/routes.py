@@ -14,6 +14,7 @@ def auth():
     code = data.get("code")
 
     response = spotify.access_token(code)
+    print(response)
     if response.get("error"):
         return jsonify(response["error"]), response["status_code"]
 

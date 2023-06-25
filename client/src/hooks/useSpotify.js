@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const SPOTIFY_URL_TOKEN = import.meta.env.VITE_SPOTIFY_URL_TOKEN;
+const URL = import.meta.env.VITE_SPOTIFY_URL_TOKEN;
 
 export default function useSpotify() {
   const [data, setData] = useState({});
@@ -9,22 +9,18 @@ export default function useSpotify() {
     if (window.location.search) {
       const params = new URLSearchParams(window.location.search);
       window.history.pushState(null, null, "/");
+      const code = params.get("code");
+      const state = params.get("state");
 
-      const data = {
-        code: params.get("code"),
-        state: params.get("state"),
-      };
-
-      if (data.state !== window.sessionStorage.getItem("state")) {
+      if (state !== window.sessionStorage.getItem("state")) {
         setData({ error: "state_mismatch" });
       } else {
-        const url = SPOTIFY_URL_TOKEN;
         const options = {
           method: "POST",
-          body: JSON.stringify(data),
+          body: JSON.stringify({ code }),
         };
 
-        fetch(url, { ...options })
+        fetch(URL, { ...options })
           .then((res) => res.json())
           .then((res) =>
             setData(typeof res === "string" ? JSON.parse(res) : res)

@@ -18,11 +18,11 @@ def auth():
     if response.get("error"):
         res = jsonify(response["error"])
         res.status_code = response["status_code"]
-
-    res = {
-        "access_token": response["access_token"],
-        "refresh_token": response["refresh_token"],
-    }
+    else:
+        res = {
+            "access_token": response["access_token"],
+            "refresh_token": response["refresh_token"],
+        }
 
     return jsonify(res)
 
@@ -36,9 +36,9 @@ def refresh():
     if response.get("error"):
         res = jsonify(response["error"])
         res.status_code = response["status_code"]
-
-    res = {
-        "access_token": response["access_token"],
-    }
+    else:
+        res = {
+            "access_token": response["access_token"],
+        }
 
     return jsonify(res)

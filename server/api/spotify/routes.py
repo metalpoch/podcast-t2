@@ -1,7 +1,6 @@
 import json
 
 from flask import jsonify, request
-
 from utils.spotify import Spotify
 
 from . import route
@@ -40,3 +39,4 @@ def refresh():
             "access_token": response["access_token"],
         }
     )
+

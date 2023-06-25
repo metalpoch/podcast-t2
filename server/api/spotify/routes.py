@@ -39,4 +39,3 @@ def refresh():
             "access_token": response["access_token"],
         }
     )
-

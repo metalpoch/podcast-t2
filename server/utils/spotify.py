@@ -9,7 +9,6 @@ class Spotify:
         self.__cliend_id = environ.get("SPOTIFY_CLIENT_ID", "")
         self.__cliend_secret = environ.get("SPOTIFY_CLIENT_SECRET", "")
         self.redirect_uri = environ.get("SPOTIFY_REDIRECT", "")
-        self.headers = self.__headers()
 
     def __headers(self) -> dict:
         string_bytes = f"{self.__cliend_id}:{self.__cliend_secret}".encode("utf-8")
@@ -31,7 +30,7 @@ class Spotify:
         return response.json()
 
     def access_token(self, code: str) -> dict:
-        headers = self.headers
+        headers = self.__headers()
         body = {
             "code": code,
             "redirect_uri": self.redirect_uri,
@@ -41,6 +40,6 @@ class Spotify:
         return self.__handlerToken(body, headers)
 
     def refresh(self, refresh_token: str) -> dict:
-        headers = self.headers
+        headers = self.__headers()
         body = {"grant_type": "refresh_token", "refresh_token": refresh_token}
         return self.__handlerToken(body, headers)

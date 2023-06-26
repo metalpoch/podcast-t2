@@ -1,6 +1,11 @@
+import { useState, useContext, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
+import Loading from "./Loading";
 import Style from "./Form.module.css";
 import Micro from "../assets/microphone.png";
-import { useState } from "react";
+import { SheetContext } from "../context/SheetContext";
+import "react-datepicker/dist/react-datepicker.css";
 
 const URL = import.meta.env.VITE_DATA_CLIENTS_URL;
 
@@ -15,8 +20,18 @@ const LANGS = [
 ];
 
 export default function Form() {
-  const [body, setBody] = useState({});
+  const [appointments, setAppointments] = useState([]);
+  const [error, setError] = useState(null);
+  const [body, setBody] = useState({ language: LANGS[0].iso });
+  const {
+    subs: { data, loading },
+  } = useContext(SheetContext);
 
+  useEffect(() => {
+    if (data && data.error) setError(data.error);
+    if (data && !data.error)
+      setAppointments(data.map((client) => dayjs(client.appointment).toDate()));
+  }, [data]);
   const handler = async (e) => {
     e.preventDefault();
     try {
@@ -35,7 +50,8 @@ export default function Form() {
     }
     e.target.reset();
   };
-
+  if (loading) return <Loading />;
+  if (error) return <h1>{error}</h1>;
   return (
     <section className={`container padding-y ${Style.flex}`} id="solicitar">
       <div className={Style.colLeft}>
@@ -68,23 +84,23 @@ export default function Form() {
               }
             />
           </div>
-
           <div className={Style.row}>
             <div className={Style.formControl}>
               <label htmlFor="appointment">Fecha</label>
-              <input
+              <DatePicker
                 id="appointment"
-                name="appointment"
-                type="date"
-                onChange={({ target }) =>
+                excludeDates={appointments}
+                minDate={new Date()}
+                selected={dayjs(body.appointment).toDate()}
+                dateFormat="dd/MM/yyyy"
+                onChange={(date) =>
                   setBody({
                     ...body,
-                    appointment: target.value,
+                    appointment: dayjs(date).format("YYYY-MM-DD"),
                   })
                 }
               />
             </div>
-
             <div className={Style.formControl}>
               <label htmlFor="language">Idioma</label>
               <select

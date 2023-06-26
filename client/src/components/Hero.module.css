@@ -58,6 +58,9 @@
 }
 
 @media (max-width: 900px) {
+  body .flex {
+    padding: 10px;
+  }
   .mask {
     -webkit-mask-image: initial;
     mask-image: initial;

@@ -126,9 +126,6 @@ p {
 }
 
 @media (max-width: 900px) {
-  body {
-    padding: 10px;
-  }
   h1 {
     font-size: 3rem;
   }

@@ -4,17 +4,19 @@ import Hero from "./components/Hero";
 import Spotify from "./components/Spotify/Spotify";
 import TestimonialSlider from "./components/TestimonialSlider";
 import Form from "./components/Form";
+import Footer from "./components/Footer";
 
 export default function App() {
-  return (
-    <>
-      <Navbar />
-      <SheetContextProvider>
-        <Hero />
-        <Spotify />
-        <TestimonialSlider />
-        <Form />
-      </SheetContextProvider>
-    </>
-  );
+	return (
+		<>
+			<Navbar />
+			<SheetContextProvider>
+				<Hero />
+				<Spotify />
+				<TestimonialSlider />
+				<Form />
+			</SheetContextProvider>
+			<Footer />
+		</>
+	);
 }

@@ -4,22 +4,27 @@ import Loading from "../Loading";
 import Style from "./Podcasts.module.css";
 
 export default function Podcasts() {
-	const [podcasts, setPodcasts] = useState([]);
-	const { podcasters } = useContext(SheetContext);
+  const [error, setError] = useState(null);
+  const [podcasts, setPodcasts] = useState([]);
+  const {
+    podcasters: { data, loading },
+  } = useContext(SheetContext);
 
-	useEffect(() => {
-		if (podcasters.data)
-			setPodcasts(
-				podcasters.data
-					.map((podcast) => ({
-						id: podcast.client,
-						url: podcast.url,
-					}))
-					.filter((pod) => pod.url !== "")
-			);
-	}, [podcasters]);
+  useEffect(() => {
+    if (data && data.error) setError(data.error);
+    if (data && !data.error)
+      setPodcasts(
+        data
+          .map((podcast) => ({
+            id: podcast.client,
+            url: podcast.url,
+          }))
+          .filter((pod) => pod.url !== "")
+      );
+  }, [data]);
 
-	if (podcasts.loading) return <Loading />;
+	if (loading) return <Loading />;
+  if (error) return <h1>{error}</h1>;
 
 	return (
 		<div className={`container padding-y ${Style.flex}`}>

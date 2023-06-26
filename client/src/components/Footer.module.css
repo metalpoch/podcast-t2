@@ -1,0 +1,36 @@
+.flex {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 2.5rem 0;
+}
+
+.image {
+	width: 300px;
+	height: auto;
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+    position: relative;
+}
+
+.link::after {
+	content: "";
+	display: block;
+	height: 2px;
+	width: 100%;
+	background: linear-gradient(
+		to right,
+		var(--clr-accent-1),
+		var(--clr-accent-2)
+	);
+	position: absolute;
+	bottom: -4px;
+}
+
+.icon {
+	color: var(--clr-accent-2);
+}

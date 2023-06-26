@@ -2,7 +2,7 @@ import Style from "./Navbar.module.css";
 
 export default function Navbar() {
 	return (
-		<nav className={`container ${Style.navbar}`}>
+		<nav className={`container ${Style.navbar}`} id="nav">
 			<ul className={Style.flex}>
 				<li>
 					<a className={Style.link} href="#bienvenida">
@@ -15,12 +15,14 @@ export default function Navbar() {
 					</a>
 				</li>
 				<li>
-					<a className={Style.link} href="testimonials">
+					<a className={Style.link} href="#testimonials">
 						Reseñas
 					</a>
 				</li>
 				<li>
-					<a className={`${Style.cta} textGradient`} href="solicitar">
+					<a
+						className={`${Style.cta} textGradient`}
+						href="#solicitar">
 						Solicitar
 					</a>
 				</li>

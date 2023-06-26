@@ -70,7 +70,7 @@ p {
 }
 
 .card:hover {
-	border: 3px solid var(--clr-accent-1);
+	outline: 3px solid var(--clr-accent-1);
 }
 
 .title {

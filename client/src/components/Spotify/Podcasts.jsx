@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { SheetContext } from "../../context/SheetContext";
+import Loading from "../Loading";
 import Style from "./Podcasts.module.css";
 
 export default function Podcasts() {
@@ -22,23 +23,24 @@ export default function Podcasts() {
       );
   }, [data]);
 
-  if (loading) return <h1>CARGANDO...(ANIMACIÓN BURDA DE LACRA)</h1>;
+	if (loading) return <Loading />;
   if (error) return <h1>{error}</h1>;
 
-  return (
-    <div className={`container padding-y ${Style.flex}`}>
-      <h3 className="title textGradient">Escucha uno de nuestros podcast</h3>
-      <div className={Style.podcastsContainer}>
-        {podcasts.map((podcast) => (
-          <iframe
-            key={podcast.id}
-            src={podcast.url}
-            frameBorder="0"
-            scrolling="no"
-            loading="lazy"
-          ></iframe>
-        ))}
-      </div>
-    </div>
-  );
+	return (
+		<div className={`container padding-y ${Style.flex}`}>
+			<h3 className="title textGradient">
+				Escucha uno de nuestros podcast
+			</h3>
+			<div className={Style.podcastsContainer}>
+				{podcasts.map((podcast) => (
+					<iframe
+						key={podcast.id}
+						src={podcast.url}
+						frameBorder="0"
+						scrolling="no"
+						loading="lazy"></iframe>
+				))}
+			</div>
+		</div>
+	);
 }

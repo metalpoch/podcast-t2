@@ -1,0 +1,104 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 3em;
+}
+
+.colLeft,
+.colRight {
+  flex: 1;
+}
+
+.colRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.colRight h3 {
+  align-self: flex-end;
+  margin: 1em 0;
+}
+
+.btn {
+  background-image: var(--gradient);
+  margin-top: 1em;
+  padding: 0.7rem 5rem;
+  border-radius: 5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  align-self: flex-end;
+  border: none;
+  transition: box-shadow 0.2s linear;
+}
+.btn:hover {
+  box-shadow: 0px 0px 5px var(--clr-accent-2);
+}
+
+.mask {
+  -webkit-mask-image: url(../assets/blob_invert.svg);
+  mask-image: url(../assets/blob_invert.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 130%;
+  mask-size: 130%;
+}
+
+.image {
+  background-image: url(../assets/microphone.png);
+  width: 100%;
+}
+
+.formControl {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.formControl input,
+.formControl select {
+  padding: 0.5em;
+  background-color: var(--clr-dark);
+  color: var(--clr-light);
+  font-size: 1.5em;
+  border-radius: 12px;
+  border: 0;
+  transition: box-shadow 0.7s ease;
+}
+
+.formControl input:focus {
+  outline: none;
+  transition: ease 0.5s;
+  box-shadow: inset 2px 0px 1px 1px var(--clr-accent-1),
+    inset -2px 0px 1px 1px var(--clr-accent-2);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .flex {
+    display: block;
+    /* flex-direction: column; */
+  }
+  .image {
+    position: absolute;
+    top: 5em;
+    left: 25%;
+    width: 300px;
+    border-radius: 85% 50% 65% 30%;
+    filter: brightness(85%);
+    z-index: -1;
+  }
+}

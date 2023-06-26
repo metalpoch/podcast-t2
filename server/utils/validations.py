@@ -33,7 +33,7 @@ def is_valid_date(date: str):
     bool
         True if the date string is valid, False otherwise.
     """
-    pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
+    pattern = r"\d{4}-\d{2}-\d{2}"
     return re.fullmatch(pattern, date) is not None
 
 

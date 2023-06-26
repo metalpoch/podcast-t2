@@ -72,6 +72,7 @@ def add_sub():
         res = jsonify(body)
         res.status_code = 422
         return res
+
     elif body.get("appointment") in appointments:
         res = jsonify({
             "error": "Unprocessable Entity",
@@ -80,7 +81,15 @@ def add_sub():
         res.status_code = 422
         return res
 
-    dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    try:
+        dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    except ValueError:
+        res = jsonify({
+            "error": "Unprocessable Entity",
+            "message": f"The appointment field was expected to be valid",
+        })
+        res.status_code = 422
+        return res
 
     body["appointment"] = dt_object.strftime("%Y-%m-%d")
     body["subscription"] = datetime.now().strftime("%Y-%m-%d")

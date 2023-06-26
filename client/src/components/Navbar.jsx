@@ -15,12 +15,12 @@ export default function Navbar() {
 					</a>
 				</li>
 				<li>
-					<a className={Style.link} href="testimonials">
+					<a className={Style.link} href="#testimonials">
 						Reseñas
 					</a>
 				</li>
 				<li>
-					<a className={`${Style.cta} textGradient`} href="solicitar">
+					<a className={`${Style.cta} textGradient`} href="#solicitar">
 						Solicitar
 					</a>
 				</li>

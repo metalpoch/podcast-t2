@@ -19,13 +19,17 @@ function Testimonial({ name, picture, title, message }) {
 
 export default function TestimonialSlider() {
 	const [index, setIndex] = useState(0);
+	const [error, setError] = useState(null);
 	const [testimonials, setTestimonials] = useState([]);
-	const { podcasters } = useContext(SheetContext);
+	const {
+		podcasters: { data, loading },
+	} = useContext(SheetContext);
 
 	useEffect(() => {
-		if (podcasters.data)
+		if (data && data.error) setError(data.error);
+		if (data && !data.error)
 			setTestimonials(
-				podcasters.data.map((client, index) => ({
+				data.map((client, index) => ({
 					id: index,
 					name: client.name,
 					picture: client.picture,
@@ -33,7 +37,7 @@ export default function TestimonialSlider() {
 					message: client.reviewMessage,
 				}))
 			);
-	}, [podcasters]);
+	}, [data]);
 
 	const handlePrev = () => {
 		setIndex(index === 0 ? testimonials.length - 3 : index - 1);
@@ -43,11 +47,13 @@ export default function TestimonialSlider() {
 		setIndex((index + 1) % (testimonials.length - 2));
 	};
 
+	if (loading) return <Loading />;
+	if (error) return <h1>{error}</h1>;
+
 	return (
 		<div className={Style.bgDark}>
 			<div className="container padding-y">
 				<h2 className="title">Testimonials</h2>
-				{podcasters.loading && <Loading />}
 				<div className={Style.slider}>
 					<button
 						className={`${Style.sliderBtn} textGradient`}

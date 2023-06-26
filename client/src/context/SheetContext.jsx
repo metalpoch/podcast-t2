@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext } from "react";
 import useFetch from "../hooks/useFetch";
 

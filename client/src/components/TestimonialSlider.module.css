@@ -1,0 +1,38 @@
+.bgDark {
+	background-color: var(--clr-dark);
+}
+
+.slider {
+	margin-top: 1rem;
+	display: flex;
+	position: relative;
+}
+
+.testimonial {
+	padding: 1rem;
+}
+
+.mask {
+	-webkit-mask-image: url(../assets/blob.svg);
+	mask-image: url(../assets/blob.svg);
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: end;
+	mask-position: end;
+	-webkit-mask-size: 120%;
+	mask-size: 120%;
+}
+
+.image {
+	width: 80%;
+	/* border-radius: 85% 50% 65% 30%; */
+}
+
+.sliderBtn {
+    background: none;
+	border: none;
+	font-size: 24px;
+	padding: 10px;
+	cursor: pointer;
+}
+

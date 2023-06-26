@@ -11,8 +11,8 @@ export default function Spotify() {
 
   return (
     <>
-      <div className={`container padding-y ${Style.flex}`} id="spotify">
-        <section className={Style.colLeft}>
+      <section className={`container padding-y ${Style.flex}`} id="spotify">
+        <div className={Style.colLeft}>
           <h3 className="title">
             ¿Quieres publicar tu podcast en Spotify y llegar a una audiencia
             global?
@@ -26,13 +26,15 @@ export default function Spotify() {
             Además, si necesitas más información sobre cómo publicar tu podcast
             en Spotify, te podemos ayudar.
           </p>
-        </section>
+        </div>
 
-        <section className={Style.colRight}>
+        <div className={Style.colRight}>
           {!data.access_token ? <Login /> : <Logged />}
-        </section>
-      </div>
-      <div className={Style.bgDark}>{data.access_token && <Podcasts />}</div>
+        </div>
+      </section>
+      <section className={Style.bgDark}>
+        {data.access_token && <Podcasts />}
+      </section>
     </>
   );
 }

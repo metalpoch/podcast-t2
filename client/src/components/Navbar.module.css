@@ -1,28 +1,82 @@
 .navbar {
-	padding: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  width: 100vw;
+  padding: 1rem 0;
 }
 
-.flex {
-	display: flex;
-	justify-content: center;
-	list-style: none;
-	gap: 5rem;
+.navButton {
+  display: none;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 50pt;
+  z-index: 2;
+}
+
+.navGroup {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 5rem;
 }
 
 .link {
-	color: var(--clr-light);
+  color: var(--clr-light);
 }
 
 .cta::after {
-	content: "";
-	display: block;
-	height: 2px;
-	width: 100%;
-	background: linear-gradient(
-		to right,
-		var(--clr-accent-1),
-		var(--clr-accent-2)
-	);
-	position: relative;
-	bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--clr-accent-1),
+    var(--clr-accent-2)
+  );
+  position: relative;
+  bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .navbar,
+  .padding-y {
+    background-color: var(--clr-darkest);
+  }
+  .navButton {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .navGroup {
+    display: none;
+    height: 0;
+    opacity: 0;
+    width: 100vw;
+    background: var(--clr-darkest);
+    align-items: center;
+    padding: 0;
+    z-index: 1;
+  }
+
+  .navGroup.show {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    position: absolute;
+    top: 20pt;
+    gap: 0.2em;
+    height: 200px;
+  }
+
+  .navGroup li {
+    font-size: 30pt;
+    font-weight: bold;
+  }
 }

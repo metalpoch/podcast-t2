@@ -14,7 +14,7 @@
 }
 
 iframe {
-  flex-basis: 90%;
+  flex-basis: 95%;
   border-radius: 1.25rem;
   transform: scale(0.99);
   filter: contrast(0.8);
@@ -24,4 +24,16 @@ iframe {
 iframe:hover {
   transform: scale(1);
   filter: contrast(1.1);
+}
+
+@media (max-width: 900px) {
+  body .flex {
+    padding: 10px;
+  }
+  .podcastsContainer {
+    gap: 0;
+  }
+  iframe {
+    transform: scale(1);
+  }
 }

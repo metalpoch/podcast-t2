@@ -57,10 +57,16 @@
 
 .image {
   width: 80%;
-  /* transform: rotate(-45deg); */
-  /* border-radius: 85% 50% 65% 30%; */
 }
 
 .arrow {
   color: var(--clr-accent-1);
+}
+
+@media (max-width: 900px) {
+  .slider {
+    width: 100%;
+    overflow-x: scroll;
+    gap: 0.5em;
+  }
 }

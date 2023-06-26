@@ -91,17 +91,11 @@
 }
 
 @media (max-width: 900px) {
-  .flex {
+  body .flex {
     display: block;
-    /* flex-direction: column; */
+    padding: 10px;
   }
   .image {
-    position: absolute;
-    top: 5em;
-    left: 25%;
-    width: 300px;
-    border-radius: 85% 50% 65% 30%;
-    filter: brightness(85%);
-    z-index: -1;
+    display: none;
   }
 }

@@ -51,6 +51,11 @@
 	font-weight: bold;
 	color: white;
 	align-self: start;
+	transition: box-shadow 0.2s linear;
+}
+
+.btn:hover {
+	box-shadow: 0px 0px 5px var(--clr-accent-2);
 }
 
 @media (max-width: 900px) {

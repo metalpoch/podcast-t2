@@ -58,7 +58,9 @@ export default function TestimonialSlider() {
 
 	return (
 		<div className={Style.bgDark}>
-			<div className={`container padding-y ${Style.flex}`}>
+			<div
+				className={`container padding-y ${Style.flex}`}
+				id="testimonials">
 				<h2 className="title">Reseñas de clientes</h2>
 				<div className={Style.slider}>
 					<button className={Style.sliderBtn} onClick={handlePrev}>

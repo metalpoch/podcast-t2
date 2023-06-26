@@ -74,20 +74,24 @@ def add_sub():
         return res
 
     elif body.get("appointment") in appointments:
-        res = jsonify({
-            "error": "Unprocessable Entity",
-            "message": f"The date {body['appointment']} of the appointment is already reserved",
-        })
+        res = jsonify(
+            {
+                "error": "Unprocessable Entity",
+                "message": f"The date {body['appointment']} of the appointment is already reserved",
+            }
+        )
         res.status_code = 422
         return res
 
     try:
         dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
     except ValueError:
-        res = jsonify({
-            "error": "Unprocessable Entity",
-            "message": f"The appointment field was expected to be valid",
-        })
+        res = jsonify(
+            {
+                "error": "Unprocessable Entity",
+                "message": f"The appointment field was expected to be valid",
+            }
+        )
         res.status_code = 422
         return res
 

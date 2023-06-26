@@ -41,8 +41,8 @@
 }
 
 .mask {
-  -webkit-mask-image: url(../assets/blob_invert.svg);
-  mask-image: url(../assets/blob_invert.svg);
+  -webkit-mask-image: url(../../assets/blob_invert.svg);
+  mask-image: url(../../assets/blob_invert.svg);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -52,7 +52,7 @@
 }
 
 .image {
-  background-image: url(../assets/microphone.png);
+  background-image: url(../../assets/microphone.png);
   width: 75%;
 }
 

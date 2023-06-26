@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Spotify from "./components/Spotify/Spotify";
 import TestimonialSlider from "./components/TestimonialSlider";
-import Form from "./components/Form";
+import ApplyFor from "./components/ApplyFor/ApplyFor";
 import Footer from "./components/Footer";
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
           <Hero />
           <Spotify />
           <TestimonialSlider />
-          <Form />
+          <ApplyFor />
         </main>
       </SheetContextProvider>
       <Footer />

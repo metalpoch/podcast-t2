@@ -13,7 +13,7 @@ export const formAlert = (data) => {
 
   return MySwal.fire({
     icon: "success",
-    title: "Felicidates!!",
+    title: "Genial!!",
     text: "Su cita se agendo correctamente. Recibira un correo electronico con mas detalles",
   });
 };

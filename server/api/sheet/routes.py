@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from os import environ
 
@@ -60,19 +61,38 @@ def add_sub():
     str
         A JSON response with the new subscription data or an error message.
     """
-    body = request.get_json()
+    header = {"Authorization": f"Bearer {SHEET_SECRET}"}
+    res = requests.get(SHEET_PODCAST_URL, headers=header)
+    appointments = [d["appointment"] for d in json.loads(res.text)]
 
+    body = request.get_json()
     body = validate_json_sheet(body)
+
     if body.get("error"):
         res = jsonify(body)
         res.status_code = 422
         return res
 
-    dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    elif body.get("appointment") in appointments:
+        res = jsonify({
+            "error": "Unprocessable Entity",
+            "message": f"The date {body['appointment']} of the appointment is already reserved",
+        })
+        res.status_code = 422
+        return res
 
-    header = {"Authorization": f"Bearer {SHEET_SECRET}"}
-    body["appointment"] = dt_object.strftime("%d/%m/%Y")
-    body["subscription"] = datetime.now().strftime("%d/%m/%Y")
+    try:
+        dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    except ValueError:
+        res = jsonify({
+            "error": "Unprocessable Entity",
+            "message": f"The appointment field was expected to be valid",
+        })
+        res.status_code = 422
+        return res
+
+    body["appointment"] = dt_object.strftime("%Y-%m-%d")
+    body["subscription"] = datetime.now().strftime("%Y-%m-%d")
     res = requests.post(SHEET_PODCAST_URL, headers=header, json=body)
 
     # Create a Message object with the appointment details and send it using Flask-Mail
@@ -81,7 +101,6 @@ def add_sub():
         client=body["client"],
         lang=body["language"],
         day=dt_object.strftime(LANGS_MAP[body["language"]]),
-        hour=dt_object.strftime("%H:%M"),
     )
     api.mail.send(sms)
 

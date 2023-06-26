@@ -7,6 +7,9 @@ import Micro from "../assets/microphone.png";
 import { SheetContext } from "../context/SheetContext";
 import "react-datepicker/dist/react-datepicker.css";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 const URL = import.meta.env.VITE_DATA_CLIENTS_URL;
 
 const LANGS = [
@@ -18,6 +21,29 @@ const LANGS = [
   { iso: "pt", name: "Português" },
   { iso: "ja", name: "日本語" },
 ];
+const MySwal = withReactContent(Swal);
+
+const formAlert = (data) => {
+  if (data.error)
+    return MySwal.fire({
+      icon: "warning",
+      title: "Oppss! Algo ha salido mal",
+      text: data.message,
+    });
+
+  return MySwal.fire({
+    icon: "success",
+    title: "Felicidates!!",
+    text: "Su cita se agendo correctamente. Recibira un correo electronico con mas detalles",
+  });
+};
+
+const errorAlert = () =>
+  MySwal.fire({
+    icon: "error",
+    title: "Parece que algo ha salido mal",
+    text: "Estaremos trabajado para restablece el servicio",
+  });
 
 export default function Form() {
   const [appointments, setAppointments] = useState([]);
@@ -32,26 +58,26 @@ export default function Form() {
     if (data && !data.error)
       setAppointments(data.map((client) => dayjs(client.appointment).toDate()));
   }, [data]);
-  const handler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
 
-      const res = await response.json();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-    e.target.reset();
+  const handler = (e) => {
+    e.preventDefault();
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    };
+    fetch(URL, options)
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) setBody({ language: LANGS[0].iso });
+
+        formAlert(res);
+      })
+      .catch((error) => errorAlert(error));
   };
   if (loading) return <Loading />;
   if (error) return <h1>{error}</h1>;
+
   return (
     <section className={`container padding-y ${Style.flex}`} id="solicitar">
       <div className={Style.colLeft}>
@@ -67,18 +93,19 @@ export default function Form() {
               id="client"
               name="client"
               type="text"
+              value={body.client}
               onChange={({ target }) =>
                 setBody({ ...body, client: target.value })
               }
             />
           </div>
-
           <div className={Style.formControl}>
             <label htmlFor="email">Correo Electrónico</label>
             <input
               id="email"
               name="email"
               type="email"
+              value={body.email}
               onChange={({ target }) =>
                 setBody({ ...body, email: target.value })
               }

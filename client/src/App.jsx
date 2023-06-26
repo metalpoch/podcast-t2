@@ -2,7 +2,7 @@ import { SheetContextProvider } from "./context/SheetContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Spotify from "./components/Spotify/Spotify";
-import Testimonial from "./components/Testimonial";
+import TestimonialSlider from "./components/TestimonialSlider";
 import Form from "./components/Form";
 
 export default function App() {
@@ -12,7 +12,7 @@ export default function App() {
       <SheetContextProvider>
         <Hero />
         <Spotify />
-        <Testimonial />
+        <TestimonialSlider />
         <Form />
       </SheetContextProvider>
     </>

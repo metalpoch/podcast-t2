@@ -2,17 +2,23 @@
 import { useContext, useEffect, useState } from "react";
 import { SheetContext } from "../context/SheetContext";
 import Loading from "./Loading";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+
 import Style from "./TestimonialSlider.module.css";
 
 function Testimonial({ name, picture, title, message }) {
 	return (
-		<div className={`card ${Style.testimonial}`}>
+		<div>
 			<div className={Style.mask}>
 				<img className={Style.image} src={picture} />
 			</div>
-			<h3 className="title">{name}</h3>
-			<p className="textGradient">{title}</p>
-			<p>{message}</p>
+			<div className={`card ${Style.testimonial} ${Style.flex}`}>
+				<div>
+					<h3 className="title">{name}</h3>
+					<p className="textGradient">{title}</p>
+				</div>
+				<p>{message}</p>
+			</div>
 		</div>
 	);
 }
@@ -52,21 +58,17 @@ export default function TestimonialSlider() {
 
 	return (
 		<div className={Style.bgDark}>
-			<div className="container padding-y">
-				<h2 className="title">Testimonials</h2>
+			<div className={`container padding-y ${Style.flex}`}>
+				<h2 className="title">Reseñas de clientes</h2>
 				<div className={Style.slider}>
-					<button
-						className={`${Style.sliderBtn} textGradient`}
-						onClick={handlePrev}>
-						&lt;
+					<button className={Style.sliderBtn} onClick={handlePrev}>
+						<FaAngleLeft className={Style.arrow} />
 					</button>
 					{testimonials.slice(index, index + 3).map((testimonial) => (
 						<Testimonial key={testimonial.id} {...testimonial} />
 					))}
-					<button
-						className={`${Style.sliderBtn} textGradient`}
-						onClick={handleNext}>
-						&gt;
+					<button className={Style.sliderBtn} onClick={handleNext}>
+						<FaAngleRight className={Style.arrow} />
 					</button>
 				</div>
 			</div>

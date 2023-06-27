@@ -1,6 +1,6 @@
 # Documentación Del Endpoint Spotify
 
-### Importaciones
+## Dependencias
 ```python
 import json
 
@@ -14,13 +14,15 @@ from . import route
 - `utils.spotify` es un módulo personalizado que contiene una clase Spotify que encapsula las funciones relacionadas con la API de Spotify.
 - `route` es un objeto Blueprint que registra las rutas de la aplicación.
 
-### Instancia de Spotify
+## Instancia de Spotify
 
 ```python
 spotify = Spotify()
 ```
 
 Se crea una instancia de la clase Spotify, que se utilizará para interactuar con la API de Spotify.
+
+## Rutas
 
 ### Ruta `"/auth/"`
 

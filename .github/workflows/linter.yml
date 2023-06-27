@@ -50,10 +50,10 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULL_REQUEST_ACTION }}
-          title: "Autoformat Python code by GitHub Action"
-          commit-message: "style(🤖): 🎨format Python code with Black and isort"
+          title: "Linter for Python/JS"
+          commit-message: "style(🤖): 🎨 Python/JS scripts formated with linters"
           body: |
-            There appear to be some Python formatting issues in this pull request. I have automatically formatted the code using Black and isort. Please review the changes and merge this pull request if they look good to you.
+            There appear to be some Python/JS formatting issues in this pull request. I have automatically formatted the code using linters. Please review the changes and merge this pull request if they look good to you.
 
            
            

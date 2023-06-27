@@ -19,24 +19,6 @@ def is_valid_email(email: str) -> bool:
     return re.match(pattern, email) is not None
 
 
-def is_valid_date(date: str):
-    """
-    Validates if a date string is valid.
-
-    Parameters
-    ----------
-    date : str
-        The date string to validate.
-
-    Returns
-    -------
-    bool
-        True if the date string is valid, False otherwise.
-    """
-    pattern = r"\d{4}-\d{2}-\d{2}"
-    return re.fullmatch(pattern, date) is not None
-
-
 def handler_spreadsheets_error(field: str, data: str):
     """
     Handles errors related to spreadsheets data.
@@ -55,35 +37,41 @@ def handler_spreadsheets_error(field: str, data: str):
         or None if the validation succeeds.
     """
     language = ("es", "en", "de", "fr", "it", "pt", "ja")
+    map_var = {
+        "client": "Nombre y Apellido",
+        "appointment": "Fecha",
+        "email": "Email",
+        "language": "Idioma"
+    }
 
     if not data:
         return {
             "error": "Unprocessable Entity",
-            "message": f"The {field} field is required",
+            "message": f"El campo {map_var[field]} es requerido.",
         }
 
     elif type(data) != str:
         return {
             "error": "Unprocessable Entity",
-            "message": f"The {field} field was expected to be a string",
+            "message": f"El campo escrito en {map_var[field]} no es valido.",
+        }
+
+    elif field == "client" and len(data) < 4:
+        return {
+            "error": "Unprocessable Entity",
+            "message": f"El nombre ingresado no es valido.",
         }
 
     elif field == "language" and data not in language:
         return {
             "error": "Unprocessable Entity",
-            "message": f"The {field} field not is in {language}",
+            "message": f"El idioma seleccionado no se encuentra en entre los siguientes: {', '.join(language)}.",
         }
 
     elif field == "email" and not is_valid_email(data):
         return {
             "error": "Unprocessable Entity",
-            "message": f"The {field} field was expected to be valid",
-        }
-
-    elif field == "appointment" and not is_valid_date(data):
-        return {
-            "error": "Unprocessable Entity",
-            "message": f"The {field} field was expected to be valid",
+            "message": f"El email ingresado no es válido.",
         }
 
 
@@ -103,8 +91,7 @@ def validate_json_sheet(body: dict) -> dict:
         or the validated data if the validation succeeds.
     """
     # Validate each field in the JSON object
-    fields = ("client", "email", "language", "appointment")
-    for field in fields:
+    for field in ("client", "email", "language"):
         data = body.get(field, "")
         error = handler_spreadsheets_error(field, data)
         if error:

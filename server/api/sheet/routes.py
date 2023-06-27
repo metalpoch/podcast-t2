@@ -77,7 +77,7 @@ def add_sub():
         res = jsonify(
             {
                 "error": "Unprocessable Entity",
-                "message": f"The date {body['appointment']} of the appointment is already reserved",
+                "message": f"Lo sentimos, la fecha que solicitaste ya está ocupada por alguien más.",
             }
         )
         res.status_code = 422
@@ -89,7 +89,7 @@ def add_sub():
         res = jsonify(
             {
                 "error": "Unprocessable Entity",
-                "message": f"The appointment field was expected to be valid",
+                "message": f"Lo sentimos, la fecha que solicitaste no es valida.",
             }
         )
         res.status_code = 422

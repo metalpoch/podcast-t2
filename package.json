@@ -7,10 +7,21 @@
     "installOnLinux": "npm install && concurrently \"cd client && npm install\" \"cd server && python -m venv venv && venv/bin/pip install -r requeriments.txt\"",
     "installOnWindows": "npm install && concurrently \"cd client && npm install\" \"cd server && python -m venv venv && venv\\Scripts\\pip install -r requeriments.txt\""
   },
-  "keywords": ["spotify", "podcast", "landing page", "react", "python", "flask"],
-  "authors": ["Team 2 Social Oplesk", "Keiber Urbila <keiberup.dev@gmail.com>"],
+  "keywords": [
+    "spotify",
+    "podcast",
+    "landing page",
+    "react",
+    "python",
+    "flask"
+  ],
+  "authors": [
+    "Team 2 Social Oplesk",
+    "Keiber Urbila <keiberup.dev@gmail.com>"
+  ],
   "dependencies": {
-    "concurrently": "8.2.0"
+    "concurrently": "8.2.0",
+    "react-calendar": "^4.3.0"
   },
   "license": "ISC"
 }

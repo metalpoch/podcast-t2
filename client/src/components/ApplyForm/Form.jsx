@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
-import Style from "./ApplyFor.module.css";
-import Loading from "../Loading";
+import Style from "./ApplyForm.module.css";
 import { formAlert, errorAlert } from "../../utils/alerts";
 import "react-datepicker/dist/react-datepicker.css";
 

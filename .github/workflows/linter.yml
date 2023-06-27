@@ -30,8 +30,10 @@ jobs:
         with:
           node-version: 18          
       - name: Install Node.js dependencies
+        # npm ci && npm  install -g eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh
         run: |
-          npm ci && npm install eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh
+          npm ci && npm install -g eslint
+        
       - name: Run ESLint
         run: |
           eslint . --ext .js,.jsx

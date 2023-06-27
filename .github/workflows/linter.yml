@@ -2,10 +2,10 @@ name: Format Python code
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
-      - main
+      - develop
 jobs:
   format:
     runs-on: ubuntu-latest

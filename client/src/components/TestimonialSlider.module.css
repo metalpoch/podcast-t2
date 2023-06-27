@@ -1,72 +1,84 @@
 .bgDark {
-  background-color: var(--clr-dark);
+	background-color: var(--clr-dark);
 }
 
 .flex {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	text-align: center;
 }
 
 .slider {
-  margin-top: 1rem;
-  display: flex;
-  position: relative;
-  gap: 2rem;
+	margin-top: 1rem;
+	display: flex;
+	position: relative;
+	gap: 2rem;
 }
 
 .sliderBtn {
-  background: none;
-  border: none;
-  font-size: 40px;
-  cursor: pointer;
+	background: none;
+	border: none;
+	font-size: 40px;
+	cursor: pointer;
+}
+
+.sliderBtn:hover {
+	box-shadow: none;
 }
 
 .testimonial {
-  padding: 8rem 2rem 2rem 2rem;
-  outline: 3px solid var(--clr-dark);
-  transition: outline 0.5s linear;
+	padding: 8rem 2rem 2rem 2rem;
+	outline: 3px solid var(--clr-dark);
+	transition: outline 0.5s linear;
 }
 
 .testimonial p {
-  margin: 0;
+	margin: 0;
 }
 
 .testimonial h3 {
-  font-size: 1.6rem;
+	font-size: 1.6rem;
 }
 
 .mask {
-  -webkit-mask-image: url(../assets/blob.svg);
-  mask-image: url(../assets/blob.svg);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
+	-webkit-mask-image: url(../assets/blob.svg);
+	mask-image: url(../assets/blob.svg);
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: 100%;
+	mask-size: 100%;
 
-  background-color: var(--clr-accent-2);
-  margin-bottom: -8rem;
+	background-color: var(--clr-accent-2);
+	margin-bottom: -8rem;
 }
 
 .mask:hover + .testimonial {
-  outline: 3px solid var(--clr-accent-1);
+	outline: 3px solid var(--clr-accent-1);
 }
 
 .image {
-  width: 80%;
+	width: 80%;
 }
 
 .arrow {
-  color: var(--clr-accent-1);
+	color: var(--clr-accent-1);
+}
+
+.stretch {
+	flex: 1;
+}
+
+.title {
+  font-weight: bold;
 }
 
 @media (max-width: 900px) {
-  .slider {
-    width: 100%;
-    overflow-x: scroll;
-    gap: 0.5em;
-  }
+	.slider {
+		width: 100%;
+		overflow-x: scroll;
+		gap: 0.5em;
+	}
 }

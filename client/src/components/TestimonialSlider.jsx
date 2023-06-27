@@ -8,14 +8,14 @@ import Style from "./TestimonialSlider.module.css";
 
 function Testimonial({ name, picture, title, message }) {
   return (
-    <div>
+    <div className={Style.stretch}>
       <div className={Style.mask}>
         <img className={Style.image} src={picture} />
       </div>
       <div className={`card ${Style.testimonial} ${Style.flex}`}>
         <div>
           <h3 className="title">{name}</h3>
-          <p className="textGradient">{title}</p>
+          <p className={`textGradient ${Style.title}`}>{title}</p>
         </div>
         <p>{message}</p>
       </div>

@@ -7,14 +7,14 @@ export const formAlert = (data) => {
   if (data.error)
     return MySwal.fire({
       icon: "warning",
-      title: "Oppss! Algo ha salido mal",
+      title: "¡Ooppss! Algo ha salido mal...",
       text: data.message,
     });
 
   return MySwal.fire({
     icon: "success",
-    title: "Genial!!",
-    text: "Su cita se agendo correctamente. Recibira un correo electronico con mas detalles",
+    title: "¡Genial!",
+    text: "Su cita se agendó correctamente. Recibirá un correo electrónico con más detalles",
   });
 };
 
@@ -22,5 +22,5 @@ export const errorAlert = () =>
   MySwal.fire({
     icon: "error",
     title: "Parece que algo ha salido mal",
-    text: "Estaremos trabajado para restablece el servicio",
+    text: "Estaremos trabajado para restablecer el servicio",
   });

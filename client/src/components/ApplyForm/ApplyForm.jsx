@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import dayjs from "dayjs";
 import Form from "./Form";
-import Style from "./ApplyFor.module.css";
+import Style from "./ApplyForm.module.css";
 import Loading from "../Loading";
 import Micro from "../../assets/microphone.png";
 import { SheetContext } from "../../context/SheetContext";
 
-export default function ApplyFor() {
+export default function ApplyForm() {
   const [waiting, setWaiting] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [error, setError] = useState(null);

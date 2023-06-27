@@ -31,12 +31,10 @@ jobs:
           node-version: 18          
       - name: Install Node.js dependencies
         run: |
-          npm ci && npm install eslint prettier
-      - name: Run lintersa of javascript
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          prettier: true
+          npm ci && npm install eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh
+      - name: Run ESLint
+        run: |
+          eslint . --ext .js,.jsx
           
       - name: Check for changes
         id: changes

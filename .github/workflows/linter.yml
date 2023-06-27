@@ -23,21 +23,7 @@ jobs:
       - name: Format with black and isort
         run: |
           black .
-          isort .
-          
-      - name: Set up Javascript
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18          
-      - name: Install Node.js dependencies
-        # npm ci && npm  install -g eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh
-        run: |
-          npm ci && npm install -g eslint
-        
-      - name: Run ESLint
-        run: |
-          eslint . --ext .js,.jsx
-          
+          isort .          
       - name: Check for changes
         id: changes
         run: |
@@ -50,10 +36,10 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULL_REQUEST_ACTION }}
-          title: "Linter for Python/JS"
-          commit-message: "style(🤖): 🎨 Python/JS scripts formated with linters"
+          title: "Linter for Python"
+          commit-message: "style(🤖): 🎨 Python scripts formated with linters"
           body: |
-            There appear to be some Python/JS formatting issues in this pull request. I have automatically formatted the code using linters. Please review the changes and merge this pull request if they look good to you.
+            There appear to be some Python formatting issues in this pull request. I have automatically formatted the code using linters. Please review the changes and merge this pull request if they look good to you.
 
            
            

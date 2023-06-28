@@ -3,6 +3,8 @@
 # Podcast-T2
 ¡Bienvenidos al servicio web líder en creación de podcast para [Spotify for Podcasters]! Con nuestra herramienta fácil de usar, puedes crear y publicar tus episodios de una manera sencilla y eficiente.
 
+¿Qué estás esperando para dar un vistazo? Haz [click en aquí para ir](https://podcast-t2.vercel.app/)
+
 ## 🛰️ Nuestra Landing Page utiliza las siguientes Tecnologías 
 
 Esta landing page actualmente trabaja con las siguientes tecnologías:

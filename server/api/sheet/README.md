@@ -1,30 +1,32 @@
 # Documentación Del Endpoint Sheet
 
-### Importaciones
-
+## Dependencias
 ```python
+import json
 from datetime import datetime
 from os import environ
 
-from flask import jsonify, request
-from flask_mail import Message
-import requests
-
 import api
+import requests
+from flask import abort, jsonify, request
+from flask_mail import Message
 from utils.email import message_template
 from utils.validations import validate_json_sheet
+
+from . import route
 ```
 
-- `datetime` se utiliza para trabajar con fechas y horas en Python.
-- `environ` se utiliza para obtener las variables de entorno.
-- `requests` se utiliza para realizar solicitudes HTTP a la hoja de cálculo.
+- `route` es un objeto Blueprint que registra las rutas de la aplicación.
+- `environ` se utiliza para obtener las variables de entorno que contienen el secreto y la URL de la hoja de cálculo de Google.
 - `flask` es el módulo principal de Flask, utilizado para crear la aplicación web y manejar las solicitudes HTTP.
-- `flask_mail` se utiliza para enviar correos electrónicos utilizando Flask.
-- `api` es un módulo personalizado que contiene funciones y configuraciones específicas de la aplicación.
-- `utils.email` es un módulo personalizado que contiene funciones relacionadas con el envío de correos electrónicos.
-- `utils.validations` es un módulo personalizado que contiene funciones relacionadas con la validación de datos.
+- `requests` se utiliza para hacer peticiones HTTP a la API de Google Sheets.
+- `json` se utiliza para convertir los datos de la solicitud en un diccionario de Python.
+- `datetime` se utiliza para manejar las fechas y los formatos.
+- `Message` se utiliza para crear un mensaje con los detalles de la cita y enviarlo usando Flask-Mail.
 
-### Ruta `"/"`
+## Rutas
+
+### Ruta `"/"` o `"/<sheet>"`
 
 ```python
 @route.route("/")
@@ -34,40 +36,62 @@ def index(sheet="podcasts"):
     if not sheet in ("subs", "podcasts"):
         abort(404)
 
-    url = SHEET_SUBSCRIPTIONS_URL if sheet == "subs" else SHEET_PODCAST_URL
+    url = SHEET_PODCAST_URL + "?sheet=" + sheet
     res = requests.get(url, headers=header)
     return res.json()
 ```
 
-Estas rutas manejan una solicitud GET a la raíz de la aplicación o a una hoja específica. Se verifica que el parámetro sheet sea válido, y se aborta la solicitud si no lo es. Se obtiene la hoja de cálculo correspondiente utilizando una solicitud GET a la URL adecuada con el encabezado de autorización. Finalmente, se devuelve la respuesta en formato JSON.
+Esta ruta devuelve una respuesta JSON con los datos de la hoja de cálculo de Google. Se obtiene el parámetro sheet de la ruta, que puede ser "subs" o "podcasts". Si no es ninguno de esos, se devuelve un error 404. Se construye la URL de la hoja de cálculo con el parámetro sheet y se hace una petición GET con el header de autorización. Se devuelve la respuesta JSON.
 
-### Ruta `"/"`, métodos `["POST"]`
+### Ruta `"/"` (método POST)
 
 ```python
 @route.route("/", methods=["POST"])
-def add():
-    body = request.get_json()
+def add_sub():
+    header = {"Authorization": f"Bearer {SHEET_SECRET}"}
+    res = requests.get(SHEET_PODCAST_URL, headers=header)
+    appointments = [d["appointment"] for d in json.loads(res.text)]
 
-    error = validate_json_sheet(body)
-    if error:
-        res = jsonify(error)
+    body = request.get_json()
+    body = validate_json_sheet(body)
+
+    if body.get("error"):
+        res = jsonify(body)
         res.status_code = 422
         return res
 
-    dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    elif body.get("appointment") in appointments:
+        res = jsonify(
+            {
+                "error": "Unprocessable Entity",
+                "message": f"Lo sentimos, la fecha que solicitaste ya está ocupada por alguien más.",
+            }
+        )
+        res.status_code = 422
+        return res
 
-    header = {"Authorization": f"Bearer {SHEET_SECRET}"}
-    body["appointment"] = dt_object.strftime("%d/%m/%Y %H:%M:%S")
-    body["subscription"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    res = requests.post(SHEET_URL, headers=header, json=body)
+    try:
+        dt_object = datetime.strptime(body["appointment"], DATE_FORMAT)
+    except ValueError:
+        res = jsonify(
+            {
+                "error": "Unprocessable Entity",
+                "message": f"Lo sentimos, la fecha que solicitaste no es valida.",
+            }
+        )
+        res.status_code = 422
+        return res
 
-    # Crear un objeto Message con los detalles de la cita y enviarlo usando Flask-Mail
+    body["appointment"] = dt_object.strftime("%Y-%m-%d")
+    body["subscription"] = datetime.now().strftime("%Y-%m-%d")
+    res = requests.post(SHEET_PODCAST_URL, headers=header, json=body)
+
+    # Create a Message object with the appointment details and send it using Flask-Mail
     sms = Message("Cita Podscat-T2 agendada", recipients=[body["email"]])
     sms.html = message_template(
         client=body["client"],
         lang=body["language"],
         day=dt_object.strftime(LANGS_MAP[body["language"]]),
-        hour=dt_object.strftime("%H:%M"),
     )
     api.mail.send(sms)
 
@@ -81,14 +105,14 @@ La estructura del objeto JSON es la siguiente:
 ```json
 {
   "client": "Nombre apellido",
-  "appointment": "2023-06-18T20:23:05.368Z",
+  "appointment": "YYYY-MM-DD",
   "language": "ja",
   "email": "foo@ziman.com"
 }
 ```
 
 - `client` (string, requerido): nombre del cliente que envía el email.
-- `appointment` (string, requerido): fecha y hora de la sesión (formato ISO 8601).
+- `appointment` (string, requerido): fecha de la sesión.
 - `language` (string, requerido): idioma del contenido del email. Solo se permiten los siguientes idiomas: `es`, `en`, `de`, `fr`, `it`, `pt`, `ja`.
 - `email` (string, requerido): dirección de email del destinatario.
 

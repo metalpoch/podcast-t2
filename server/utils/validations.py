@@ -41,7 +41,7 @@ def handler_spreadsheets_error(field: str, data: str):
         "client": "Nombre y Apellido",
         "appointment": "Fecha",
         "email": "Email",
-        "language": "Idioma"
+        "language": "Idioma",
     }
 
     if not data:

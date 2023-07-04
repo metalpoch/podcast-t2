@@ -27,7 +27,10 @@ export default function TestimonialSlider() {
   const [index, setIndex] = useState(0);
   const [error, setError] = useState(null);
   const [testimonials, setTestimonials] = useState([]);
+  const [showTest, setShowTest] = useState([]);
   const {
+    language, 
+    setLanguage,
     podcasters: { data, loading },
   } = useContext(SheetContext);
 
@@ -45,6 +48,10 @@ export default function TestimonialSlider() {
       );
   }, [data]);
 
+
+  useEffect(()=>{
+    
+  }, [testimonials, language])
   const handlePrev = () => {
     setIndex(index === 0 ? testimonials.length - 3 : index - 1);
   };

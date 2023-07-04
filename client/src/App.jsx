@@ -9,8 +9,8 @@ import Footer from "./components/Footer";
 export default function App() {
   return (
     <>
+    <SheetContextProvider>
       <Navbar />
-      <SheetContextProvider>
         <main>
           <Hero />
           <Spotify />

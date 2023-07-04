@@ -29,16 +29,26 @@ export default function TestimonialSlider() {
   const [testimonials, setTestimonials] = useState([]);
   const [showTest, setShowTest] = useState([]);
   const {
-    language, 
-    setLanguage,
+    language,
     podcasters: { data, loading },
   } = useContext(SheetContext);
 
   useEffect(() => {
+
     if (data && data.error) setError(data.error);
-    if (data && !data.error)
+    if (data && !data.error){
+      console.log(data[0].language)
+      console.log(language)
+      console.log(data[0].language === language)
+      let filteredData = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].language === language) {
+            filteredData.push(data[i])
+        }        
+      }
+      console.log(filteredData)
       setTestimonials(
-        data.map((client, index) => ({
+        filteredData.map((client, index) => ({
           id: index,
           name: client.name,
           picture: client.picture,
@@ -46,12 +56,13 @@ export default function TestimonialSlider() {
           message: client.reviewMessage,
         }))
       );
-  }, [data]);
+      console.log(testimonials)
+    }
+      
+  }, [data, language]);
 
 
-  useEffect(()=>{
-    
-  }, [testimonials, language])
+
   const handlePrev = () => {
     setIndex(index === 0 ? testimonials.length - 3 : index - 1);
   };

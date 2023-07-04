@@ -38,8 +38,8 @@ console.log(language)
         </li>
         <li>
           <select name="language" onChange={handleSelect} id="language">
-            <option value="en">en</option>
             <option value="es">es</option>
+            <option value="en">en</option>
             <option value="fr">fr</option>
             <option value="de">de</option>
           </select>

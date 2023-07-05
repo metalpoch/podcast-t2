@@ -20,7 +20,7 @@ export default function Podcasts() {
             id: podcast.client,
             url: podcast.url,
           }))
-          .filter((pod) => pod.url !== "")
+          .filter((pod) => pod.url !== ""),
       );
   }, [data]);
 

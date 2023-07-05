@@ -4,10 +4,10 @@
   padding: 0.2rem 0.2rem;
   border-radius: 12px;
   border: 0;
-  outline: 0.12em dashed var(--clr-accent-2);
+  outline: 1px solid var(--clr-accent-2);
   transition: outline 0.16s linear;
 }
 
 .language:hover {
-  outline: 0.2em dashed var(--clr-accent-1);
+  outline: 1px solid var(--clr-accent-1);
 }

@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ImMenu } from "react-icons/im";
 import Select from "./Select";
 import Style from "./Navbar.module.css";
+import { SheetContext } from "../../context/SheetContext";
 
 export default function Navbar() {
 	const [show, setShow] = useState(false);
+
+	const { content } = useContext(SheetContext);
 
 	return (
 		<nav className={`container ${Style.navbar}`} id="nav">
@@ -17,24 +20,24 @@ export default function Navbar() {
 				}>
 				<li>
 					<a className={Style.link} href="#bienvenida">
-						Bienvenida
+						{content.navbar.welcome}
 					</a>
 				</li>
 				<li>
 					<a className={Style.link} href="#spotify">
-						Spotify
+						{content.navbar.spotify}
 					</a>
 				</li>
 				<li>
 					<a className={Style.link} href="#testimonials">
-						Reseñas
+						{content.navbar.testimonials}
 					</a>
 				</li>
 				<li>
 					<a
 						className={`${Style.cta} textGradient`}
 						href="#solicitar">
-						Solicitar
+						{content.navbar.request}
 					</a>
 				</li>
 				<li>

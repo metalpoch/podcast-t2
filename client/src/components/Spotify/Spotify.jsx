@@ -7,30 +7,28 @@ import { useContext } from "react";
 import { SheetContext } from "../../context/SheetContext";
 
 export default function Spotify() {
-	const data = useSpotify();
+  const data = useSpotify();
 
-	const { content } = useContext(SheetContext);
+  const { content } = useContext(SheetContext);
 
-	if (data.error) alert(JSON.stringify(data));
+  if (data.error) alert(JSON.stringify(data));
 
-	return (
-		<>
-			<section
-				className={`container padding-y ${Style.flex}`}
-				id="spotify">
-				<div className={Style.colLeft}>
-					<h3 className="title">{content.spotify.title}</h3>
-					<p>{content.spotify.text1}</p>
-					<p>{content.spotify.text2}</p>
-				</div>
+  return (
+    <>
+      <section className={`container padding-y ${Style.flex}`} id="spotify">
+        <div className={Style.colLeft}>
+          <h3 className="title">{content.spotify.title}</h3>
+          <p>{content.spotify.text1}</p>
+          <p>{content.spotify.text2}</p>
+        </div>
 
-				<div className={Style.colRight}>
-					{!data.access_token ? <Login /> : <Logged />}
-				</div>
-			</section>
-			<section className={Style.bgDark}>
-				{data.access_token && <Podcasts />}
-			</section>
-		</>
-	);
+        <div className={Style.colRight}>
+          {!data.access_token ? <Login /> : <Logged />}
+        </div>
+      </section>
+      <section className={Style.bgDark}>
+        {data.access_token && <Podcasts />}
+      </section>
+    </>
+  );
 }

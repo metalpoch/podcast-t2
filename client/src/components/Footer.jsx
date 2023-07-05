@@ -5,15 +5,15 @@ import { useContext } from "react";
 import { SheetContext } from "../context/SheetContext";
 
 export default function Footer() {
-	const { content } = useContext(SheetContext);
+  const { content } = useContext(SheetContext);
 
-	return (
-		<div className={`container ${Style.flex}`}>
-			<img src={Logo} alt="PodTalk Logo" className={Style.image} />
-			<a href="#nav" className={`textGradient ${Style.link}`}>
-				{content.footer.return}
-				<FaAngleUp className={Style.icon} />
-			</a>
-		</div>
-	);
+  return (
+    <div className={`container ${Style.flex}`}>
+      <img src={Logo} alt="PodTalk Logo" className={Style.image} />
+      <a href="#nav" className={`textGradient ${Style.link}`}>
+        {content.footer.return}
+        <FaAngleUp className={Style.icon} />
+      </a>
+    </div>
+  );
 }

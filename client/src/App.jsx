@@ -7,18 +7,18 @@ import ApplyForm from "./components/ApplyForm/ApplyForm";
 import Footer from "./components/Footer";
 
 export default function App() {
-	return (
-		<>
-			<SheetContextProvider>
-				<Navbar />
-				<main>
-					<Hero />
-					<Spotify />
-					<TestimonialSlider />
-					<ApplyForm />
-				</main>
-			</SheetContextProvider>
-			<Footer />
-		</>
-	);
+  return (
+    <>
+      <SheetContextProvider>
+        <Navbar />
+        <main>
+          <Hero />
+          <Spotify />
+          <TestimonialSlider />
+          <ApplyForm />
+        </main>
+      </SheetContextProvider>
+      <Footer />
+    </>
+  );
 }

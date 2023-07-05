@@ -100,7 +100,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
                   value={lang.iso}
                   selected={language == lang.iso ? true : false}
                 >
-                  {`${lang.flag} ${lang.name}`}
+                  {lang.name}
                 </option>
               ))}
             </select>

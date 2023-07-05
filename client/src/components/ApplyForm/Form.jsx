@@ -13,9 +13,6 @@ const LANGS = [
   { iso: "en", name: "English" },
   { iso: "de", name: "Deutsch" },
   { iso: "fr", name: "Français" },
-  { iso: "it", name: "Italiano" },
-  { iso: "pt", name: "Português" },
-  { iso: "ja", name: "日本語" },
 ];
 
 export default function Form({ appointments, setAppointments, setWaiting }) {

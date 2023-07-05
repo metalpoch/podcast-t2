@@ -17,11 +17,12 @@ const LANGS = [
 ];
 
 export default function Form({ appointments, setAppointments, setWaiting }) {
+  const { content, language } = useContext(SheetContext);
+
   const [client, setClient] = useState("");
   const [email, setEmail] = useState("");
-  const [language, setLanguage] = useState(LANGS[0].iso);
   const [appointment, setAppointment] = useState(new Date());
-  const { content } = useContext(SheetContext);
+  const [emailLang, setEmailLang] = useState(language);
 
   const handler = (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
       body: JSON.stringify({
         client,
         email,
-        language,
+        emailLang,
         appointment,
       }),
     };
@@ -42,7 +43,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
         if (!res.error) {
           setClient("");
           setEmail("");
-          setLanguage(LANGS[0].iso);
+          setEmailLang(language);
           setAppointment(new Date());
           setAppointments([...appointments, dayjs(appointment).toDate()]);
         }
@@ -98,10 +99,14 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
             <select
               id="language"
               name="language"
-              onChange={({ target }) => setLanguage(target.value)}
+              onChange={({ target }) => setEmailLang(target.value)}
             >
               {LANGS.map((lang, idx) => (
-                <option key={idx} value={lang.iso}>
+                <option
+                  key={idx}
+                  value={lang.iso}
+                  selected={language === lang.iso && language}
+                >
                   {lang.name}
                 </option>
               ))}

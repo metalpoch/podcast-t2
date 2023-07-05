@@ -10,5 +10,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <SheetContextProvider>
       <App />
     </SheetContextProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

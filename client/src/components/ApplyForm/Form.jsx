@@ -95,11 +95,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
               onChange={({ target }) => setEmailLang(target.value)}
             >
               {languages.map((lang) => (
-                <option
-                  key={lang.iso}
-                  value={lang.iso}
-                  selected={language === lang.iso && language}
-                >
+                <option key={lang.iso} value={lang.iso} defaultValue={lang.iso}>
                   {`${lang.flag} ${lang.name}`}
                 </option>
               ))}

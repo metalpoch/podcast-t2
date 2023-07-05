@@ -23,7 +23,7 @@ export default function useSpotify() {
         fetch(URL, { ...options })
           .then((res) => res.json())
           .then((res) =>
-            setData(typeof res === "string" ? JSON.parse(res) : res)
+            setData(typeof res === "string" ? JSON.parse(res) : res),
           )
           .catch((error) => {
             alert(JSON.stringify({ error, msg: error.message }));

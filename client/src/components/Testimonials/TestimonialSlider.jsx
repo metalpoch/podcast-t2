@@ -20,7 +20,7 @@ export default function TestimonialSlider() {
     if (data && data.error) setError(data.error);
     if (data && !data.error) {
       const filteredData = data.filter(
-        (client) => client.language === language
+        (client) => client.language === language,
       );
       setTestimonials(
         filteredData.map((client, index) => ({
@@ -29,7 +29,7 @@ export default function TestimonialSlider() {
           picture: client.picture,
           title: client.reviewTitle,
           message: client.reviewMessage,
-        }))
+        })),
       );
     }
   }, [data, language]);

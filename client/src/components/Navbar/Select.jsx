@@ -11,7 +11,7 @@ export default function Select() {
     <select name="language" onChange={handleSelect} className={Style.language}>
       {languages.map((lang) => {
         return (
-          <option key={lang.iso} value={lang.iso}>
+          <option key={lang.iso} defaultValue={lang.iso} value={lang.iso}>
             {lang.flag}
           </option>
         );

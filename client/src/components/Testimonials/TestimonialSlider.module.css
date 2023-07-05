@@ -42,8 +42,8 @@
 }
 
 .mask {
-	-webkit-mask-image: url(../assets/blob.svg);
-	mask-image: url(../assets/blob.svg);
+	-webkit-mask-image: url(../../assets/blob.svg);
+	mask-image: url(../../assets/blob.svg);
 	-webkit-mask-repeat: no-repeat;
 	mask-repeat: no-repeat;
 	-webkit-mask-position: center;

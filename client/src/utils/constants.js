@@ -1,5 +1,4 @@
-export default {
-	navbarLinks: ["#bienvenida", "#spotify", "#testimonials", "#solicitar"],
+export const constants = {
 	es: {
 		navbar: {
 			welcome: "Bienvenida",

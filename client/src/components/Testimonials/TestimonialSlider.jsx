@@ -22,7 +22,6 @@ export default function TestimonialSlider() {
       const filteredData = data.filter(
         (client) => client.language === language
       );
-
       setTestimonials(
         filteredData.map((client, index) => ({
           id: index,

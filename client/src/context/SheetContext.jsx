@@ -5,6 +5,12 @@ import { constants } from "../utils/constants.js";
 
 const URL_SUBS = import.meta.env.VITE_DATA_SUBCRIPTORS_URL;
 const URL_PODCASTERS = import.meta.env.VITE_DATA_CLIENTS_URL;
+const LANGS = [
+  { iso: "es", name: "Español", flag: "🇪🇸" },
+  { iso: "en", name: "English", flag: "🇬🇧" },
+  { iso: "de", name: "Deutsch", flag: "🇩🇪" },
+  { iso: "fr", name: "Français", flag: "🇫🇷" },
+];
 
 const SheetContext = createContext();
 
@@ -26,6 +32,7 @@ const SheetContextProvider = (props) => {
         subs,
         podcasters,
         content,
+        languages: LANGS,
       }}
     >
       {props.children}

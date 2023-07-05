@@ -8,13 +8,15 @@ import Testimonial from "./Testimonial";
 import Style from "./TestimonialSlider.module.css";
 
 export default function TestimonialSlider() {
-  const [index, setIndex] = useState(0);
-  const [error, setError] = useState(null);
-  const [testimonials, setTestimonials] = useState([]);
-  const {
-    language,
-    podcasters: { data, loading },
-  } = useContext(SheetContext);
+	const [index, setIndex] = useState(0);
+	const [error, setError] = useState(null);
+	const [testimonials, setTestimonials] = useState([]);
+	const {
+		language,
+		podcasters: { data, loading },
+		content,
+	} = useContext(SheetContext);
+
 
   useEffect(() => {
     if (data && data.error) setError(data.error);
@@ -45,22 +47,27 @@ export default function TestimonialSlider() {
   if (loading) return <Loading />;
   if (error) return <h1>{error}</h1>;
 
-  return (
-    <section className={Style.bgDark}>
-      <div className={`container padding-y ${Style.flex}`} id="testimonials">
-        <h2 className="title">Reseñas de clientes</h2>
-        <div className={Style.slider}>
-          <button className={Style.sliderBtn} onClick={handlePrev}>
-            <FaAngleLeft className={Style.arrow} />
-          </button>
-          {testimonials.slice(index, index + 3).map((testimonial) => (
-            <Testimonial key={testimonial.id} {...testimonial} />
-          ))}
-          <button className={Style.sliderBtn} onClick={handleNext}>
-            <FaAngleRight className={Style.arrow} />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
+	if (loading) return <Loading />;
+	if (error) return <h1>{error}</h1>;
+
+	return (
+		<section className={Style.bgDark}>
+			<div
+				className={`container padding-y ${Style.flex}`}
+				id="testimonials">
+				<h2 className="title">{content.testimonials.title}</h2>
+				<div className={Style.slider}>
+					<button className={Style.sliderBtn} onClick={handlePrev}>
+						<FaAngleLeft className={Style.arrow} />
+					</button>
+					{testimonials.slice(index, index + 3).map((testimonial) => (
+						<Testimonial key={testimonial.id} {...testimonial} />
+					))}
+					<button className={Style.sliderBtn} onClick={handleNext}>
+						<FaAngleRight className={Style.arrow} />
+					</button>
+				</div>
+			</div>
+		</section>
+	);
 }

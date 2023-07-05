@@ -17,32 +17,35 @@ export default function TestimonialSlider() {
 		content,
 	} = useContext(SheetContext);
 
-	useEffect(() => {
-		if (data && data.error) setError(data.error);
-		if (data && !data.error) {
-			const filteredData = data.filter(
-				(client) => client.language === language
-			);
 
-			setTestimonials(
-				filteredData.map((client, index) => ({
-					id: index,
-					name: client.name,
-					picture: client.picture,
-					title: client.reviewTitle,
-					message: client.reviewMessage,
-				}))
-			);
-		}
-	}, [data, language]);
+  useEffect(() => {
+    if (data && data.error) setError(data.error);
+    if (data && !data.error) {
+      const filteredData = data.filter(
+        (client) => client.language === language
+      );
+      setTestimonials(
+        filteredData.map((client, index) => ({
+          id: index,
+          name: client.name,
+          picture: client.picture,
+          title: client.reviewTitle,
+          message: client.reviewMessage,
+        }))
+      );
+    }
+  }, [data, language]);
 
-	const handlePrev = () => {
-		setIndex(index === 0 ? testimonials.length - 3 : index - 1);
-	};
+  const handlePrev = () => {
+    setIndex(index === 0 ? testimonials.length - 3 : index - 1);
+  };
 
-	const handleNext = () => {
-		setIndex((index + 1) % (testimonials.length - 2));
-	};
+  const handleNext = () => {
+    setIndex((index + 1) % (testimonials.length - 2));
+  };
+
+  if (loading) return <Loading />;
+  if (error) return <h1>{error}</h1>;
 
 	if (loading) return <Loading />;
 	if (error) return <h1>{error}</h1>;

@@ -1,26 +1,26 @@
 .grouper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .btn {
-	display: flex;
-	gap: 0.5rem;
-	align-items: center;
-	padding: 0.7rem 5rem;
-	border-radius: 5rem;
-	border: none;
-	outline: none;
-	cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.7rem 5rem;
+  border-radius: 5rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 .logo {
-	color: var(--clr-accent-1);
-	font-size: 1.5rem;
+  color: var(--clr-accent-1);
+  font-size: 1.5rem;
 }
 
 .btnText {
-	font-weight: bold;
+  font-weight: bold;
 }

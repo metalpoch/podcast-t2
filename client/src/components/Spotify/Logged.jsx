@@ -13,4 +13,5 @@ export default function Logged() {
 			<p>{content.spotify.loggedText}</p>
 		</div>
 	);
+
 }

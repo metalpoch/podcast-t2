@@ -20,6 +20,13 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
   const handler = (e) => {
     e.preventDefault();
     setWaiting(true);
+    console.log({
+      client,
+      email,
+      language: emailLang,
+      appointment,
+    });
+
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,6 +50,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
         formAlert(res);
       })
       .catch((error) => {
+        console.log(error);
         errorAlert(error);
       })
       .finally(() => setWaiting(false));
@@ -94,7 +102,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
             <select
               id="language"
               name="language"
-              onChange={({ target: value }) => setEmailLang(value)}
+              onChange={({ target: { value } }) => setEmailLang(value)}
             >
               {languages.map((lang) => (
                 <option

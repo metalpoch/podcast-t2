@@ -1,9 +1,9 @@
 name: Format Python/Node.js code
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
     
 jobs:
   format:

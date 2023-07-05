@@ -1,21 +1,18 @@
 import { useContext } from "react";
+import Style from "./Select.module.css";
 import { SheetContext } from "../../context/SheetContext";
 
 export default function Select() {
-  const { setLanguage } = useContext(SheetContext);
+  const { setLanguage, languages } = useContext(SheetContext);
 
-  const langOptions = ["es", "en", "fr", "de"];
-
-  const handleSelect = (event) => {
-    setLanguage(event.target.value);
-  };
+  const handleSelect = ({ target: { value } }) => setLanguage(value);
 
   return (
-    <select name="language" onChange={handleSelect} id="language">
-      {langOptions.map((lang, index) => {
+    <select name="language" onChange={handleSelect} className={Style.language}>
+      {languages.map((lang) => {
         return (
-          <option key={index} value={lang}>
-            {lang}
+          <option key={lang.iso} defaultValue={lang.iso} value={lang.iso}>
+            {lang.flag}
           </option>
         );
       })}

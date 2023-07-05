@@ -1,0 +1,13 @@
+.language {
+  background-color: var(--clr-dark);
+  color: var(--clr-light);
+  padding: 0.2rem 0.2rem;
+  border-radius: 12px;
+  border: 0;
+  outline: 1px solid var(--clr-accent-2);
+  transition: outline 0.16s linear;
+}
+
+.language:hover {
+  outline: 1px solid var(--clr-accent-1);
+}

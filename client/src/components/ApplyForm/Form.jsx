@@ -9,15 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const URL = import.meta.env.VITE_DATA_CLIENTS_URL;
 
-const LANGS = [
-  { iso: "es", name: "Español" },
-  { iso: "en", name: "English" },
-  { iso: "de", name: "Deutsch" },
-  { iso: "fr", name: "Français" },
-];
-
 export default function Form({ appointments, setAppointments, setWaiting }) {
-  const { content, language } = useContext(SheetContext);
+  const { content, language, languages } = useContext(SheetContext);
 
   const [client, setClient] = useState("");
   const [email, setEmail] = useState("");
@@ -100,14 +93,11 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
               id="language"
               name="language"
               onChange={({ target }) => setEmailLang(target.value)}
+              value={language}
             >
-              {LANGS.map((lang, idx) => (
-                <option
-                  key={idx}
-                  value={lang.iso}
-                  selected={language === lang.iso && language}
-                >
-                  {lang.name}
+              {languages.map((lang) => (
+                <option key={lang.iso} value={lang.iso}>
+                  {`${lang.flag} ${lang.name}`}
                 </option>
               ))}
             </select>

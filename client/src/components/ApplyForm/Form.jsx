@@ -26,7 +26,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
       body: JSON.stringify({
         client,
         email,
-        emailLang,
+        language: emailLang,
         appointment,
       }),
     };

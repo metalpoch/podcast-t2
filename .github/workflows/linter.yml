@@ -1,11 +1,10 @@
-name: Format Python code
+name: Format Python/Node.js code
 on:
   push:
-    branches:
-      - develop
+    branches: [ "main", "develop" ]
   pull_request:
-    branches:
-      - develop
+    branches: [ "main", "develop" ]
+    
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -17,13 +16,22 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
-      - name: Install dependencies
+      - name: Install python dependencies
         run: |
           pip install black==23.3 isort==5.12
       - name: Format with black and isort
         run: |
           black .
           isort .          
+        
+      - name: Install Node.js dependencies
+        run: |
+          npm i -g prettier
+          
+      - name: Format with prettier
+        run: |
+          prettier --write "**/{*.jsx,*.js,*.css}"
+          
       - name: Check for changes
         id: changes
         run: |
@@ -36,10 +44,10 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULL_REQUEST_ACTION }}
-          title: "Linter for Python"
-          commit-message: "style(🤖): 🎨 Python scripts formated with linters"
+          title: "Linter/Prettier"
+          commit-message: "style(🤖): 🎨 scripts formated with linters"
           body: |
-            There appear to be some Python formatting issues in this pull request. I have automatically formatted the code using linters. Please review the changes and merge this pull request if they look good to you.
+            There seems to be some formatting issues with this pull request. I have auto formatted the code using linters. Review the changes and merge this pull request if that's okay with you.
 
            
            

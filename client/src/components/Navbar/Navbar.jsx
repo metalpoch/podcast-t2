@@ -1,15 +1,14 @@
 import { useContext, useState } from "react";
 import { ImMenu } from "react-icons/im";
+import Select from "./Select";
 import Style from "./Navbar.module.css";
-import { SheetContext } from "../context/SheetContext";
+import { SheetContext } from "../../context/SheetContext";
 
 export default function Navbar() {
-  const {language, setLanguage} = useContext(SheetContext)
-  const handleSelect = (event )=>{
-setLanguage(event.target.value)
-console.log(language)
-  }
   const [show, setShow] = useState(false);
+
+  const { content } = useContext(SheetContext);
+
   return (
     <nav className={`container ${Style.navbar}`} id="nav">
       <button className={Style.navButton} onClick={() => setShow(!show)}>
@@ -18,31 +17,26 @@ console.log(language)
       <ul className={show ? `${Style.navGroup} ${Style.show}` : Style.navGroup}>
         <li>
           <a className={Style.link} href="#bienvenida">
-            Bienvenida
+            {content.navbar.welcome}
           </a>
         </li>
         <li>
           <a className={Style.link} href="#spotify">
-            Spotify
+            {content.navbar.spotify}
           </a>
         </li>
         <li>
           <a className={Style.link} href="#testimonials">
-            Reseñas
+            {content.navbar.testimonials}
           </a>
         </li>
         <li>
           <a className={`${Style.cta} textGradient`} href="#solicitar">
-            Solicitar
+            {content.navbar.request}
           </a>
         </li>
         <li>
-          <select name="language" onChange={handleSelect} id="language">
-            <option value="es">es</option>
-            <option value="en">en</option>
-            <option value="fr">fr</option>
-            <option value="de">de</option>
-          </select>
+          <Select />
         </li>
       </ul>
     </nav>

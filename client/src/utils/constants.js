@@ -33,6 +33,7 @@ export const constants = {
       email: "Correo Electrónico",
       date: "Fecha",
       language: "Idioma",
+      button: "Solicitar",
     },
     footer: {
       return: "Volver al inicio",
@@ -72,6 +73,7 @@ export const constants = {
       email: "Email",
       date: "Date",
       language: "Language",
+      button: "Request",
     },
     footer: {
       return: "Return to home",
@@ -111,6 +113,7 @@ export const constants = {
       email: "Email",
       date: "Date",
       language: "Langue",
+      button: "Demande",
     },
     footer: {
       return: "Retour à l'accueil",
@@ -152,6 +155,7 @@ export const constants = {
       email: "E-Mail",
       date: "Datum",
       language: "Sprache",
+      button: "Anfrage",
     },
     footer: {
       return: "Zurück zur Startseite",

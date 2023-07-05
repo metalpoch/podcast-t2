@@ -1,21 +1,20 @@
 import Style from "./Hero.module.css";
 import Girl from "../assets/girl.png";
 import Logo from "../assets/PodTalk ogo.png";
+import { useContext } from "react";
+import { SheetContext } from "../context/SheetContext";
 
 export default function Hero() {
+  const { content } = useContext(SheetContext);
+
   return (
     <section className={`container  padding-y ${Style.flex}`} id="bienvenida">
       <div className={Style.colLeft}>
         <img className={Style.logo} src={Logo} />
-        <h1 className="title">
-          Potencia tu podcast con nuestros servicios especializados
-        </h1>
-        <p>
-          Te ayudamos a llevar tu idea al siguiente nivel para que destaques en
-          el mundo del podcasting
-        </p>
+        <h1 className="title">{content.hero.title}</h1>
+        <p>{content.hero.text}</p>
         <a className={Style.btn} href="#solicitar">
-          Solicitar
+          {content.hero.button}
         </a>
       </div>
       <div className={`${Style.colRight} ${Style.mask}`}>

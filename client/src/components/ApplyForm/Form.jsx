@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SheetContext } from "../../context/SheetContext";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import Style from "./ApplyForm.module.css";
@@ -13,16 +14,15 @@ const LANGS = [
   { iso: "en", name: "English" },
   { iso: "de", name: "Deutsch" },
   { iso: "fr", name: "Français" },
-  { iso: "it", name: "Italiano" },
-  { iso: "pt", name: "Português" },
-  { iso: "ja", name: "日本語" },
 ];
 
 export default function Form({ appointments, setAppointments, setWaiting }) {
+  const { content, language } = useContext(SheetContext);
+
   const [client, setClient] = useState("");
   const [email, setEmail] = useState("");
-  const [language, setLanguage] = useState(LANGS[0].iso);
   const [appointment, setAppointment] = useState(new Date());
+  const [emailLang, setEmailLang] = useState(language);
 
   const handler = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
       body: JSON.stringify({
         client,
         email,
-        language,
+        emailLang,
         appointment,
       }),
     };
@@ -43,7 +43,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
         if (!res.error) {
           setClient("");
           setEmail("");
-          setLanguage(LANGS[0].iso);
+          setEmailLang(language);
           setAppointment(new Date());
           setAppointments([...appointments, dayjs(appointment).toDate()]);
         }
@@ -57,11 +57,11 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
 
   return (
     <form className={Style.colRight} onSubmit={handler}>
-      <h3 className="title">Solicita nuestro servicio</h3>
+      <h3 className="title">{content.form.title}</h3>
 
       <div className={Style.inputsContainer}>
         <div className={Style.formControl}>
-          <label htmlFor="client">Nombre y Apellido</label>
+          <label htmlFor="client">{content.form.name}</label>
           <input
             id="client"
             name="client"
@@ -71,7 +71,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
           />
         </div>
         <div className={Style.formControl}>
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="email">{content.form.email}</label>
           <input
             id="email"
             name="email"
@@ -82,7 +82,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
         </div>
         <div className={Style.row}>
           <div className={Style.formControl}>
-            <label htmlFor="appointment">Fecha</label>
+            <label htmlFor="appointment">{content.form.date}</label>
             <DatePicker
               id="appointment"
               excludeDates={appointments}
@@ -95,14 +95,18 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
             />
           </div>
           <div className={Style.formControl}>
-            <label htmlFor="language">Idioma</label>
+            <label htmlFor="language">{content.form.language}</label>
             <select
               id="language"
               name="language"
-              onChange={({ target }) => setLanguage(target.value)}
+              onChange={({ target }) => setEmailLang(target.value)}
             >
               {LANGS.map((lang, idx) => (
-                <option key={idx} value={lang.iso}>
+                <option
+                  key={idx}
+                  value={lang.iso}
+                  selected={language === lang.iso && language}
+                >
                   {lang.name}
                 </option>
               ))}
@@ -110,7 +114,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
           </div>
         </div>
       </div>
-      <input type="submit" value="Solicitar" className={Style.btn} />
+      <input type="submit" value={content.form.button} className={Style.btn} />
     </form>
   );
 }

@@ -17,8 +17,8 @@ export default function App() {
           <TestimonialSlider />
           <ApplyForm />
         </main>
+        <Footer />
       </SheetContextProvider>
-      <Footer />
     </>
   );
 }

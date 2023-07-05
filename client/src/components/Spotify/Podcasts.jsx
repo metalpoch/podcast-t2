@@ -8,6 +8,7 @@ export default function Podcasts() {
   const [podcasts, setPodcasts] = useState([]);
   const {
     podcasters: { data, loading },
+    content,
   } = useContext(SheetContext);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Podcasts() {
 
   return (
     <div className={`container padding-y ${Style.flex}`}>
-      <h3 className="title textGradient">Escucha uno de nuestros podcast</h3>
+      <h3 className="title textGradient">{content.spotify.podcast}</h3>
       <div className={Style.podcastsContainer}>
         {podcasts.map((podcast) => (
           <iframe

@@ -44,7 +44,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULL_REQUEST_ACTION }}
-          title: "Linter for Python"
+          title: "Linter/Prettier"
           commit-message: "style(🤖): 🎨 scripts formated with linters"
           body: |
             There seems to be some formatting issues with this pull request. I have auto formatted the code using linters. Review the changes and merge this pull request if that's okay with you.

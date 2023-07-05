@@ -1,4 +1,5 @@
 .language {
+  font-family: "NotoColorEmojiLimited";
   background-color: var(--clr-dark);
   color: var(--clr-light);
   padding: 0.2rem 0.2rem;

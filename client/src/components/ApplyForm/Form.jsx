@@ -26,7 +26,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
       body: JSON.stringify({
         client,
         email,
-        emailLang,
+        language: emailLang,
         appointment,
       }),
     };
@@ -60,6 +60,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
             name="client"
             type="text"
             value={client}
+            required
             onChange={({ target }) => setClient(target.value)}
           />
         </div>
@@ -70,6 +71,7 @@ export default function Form({ appointments, setAppointments, setWaiting }) {
             name="email"
             type="email"
             value={email}
+            required
             onChange={({ target }) => setEmail(target.value)}
           />
         </div>

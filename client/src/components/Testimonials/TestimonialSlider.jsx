@@ -14,6 +14,7 @@ export default function TestimonialSlider() {
 	const {
 		language,
 		podcasters: { data, loading },
+		content,
 	} = useContext(SheetContext);
 
 	useEffect(() => {
@@ -51,7 +52,7 @@ export default function TestimonialSlider() {
 			<div
 				className={`container padding-y ${Style.flex}`}
 				id="testimonials">
-				<h2 className="title">Reseñas de clientes</h2>
+				<h2 className="title">{content.testimonials.title}</h2>
 				<div className={Style.slider}>
 					<button className={Style.sliderBtn} onClick={handlePrev}>
 						<FaAngleLeft className={Style.arrow} />
